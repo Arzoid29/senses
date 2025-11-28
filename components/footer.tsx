@@ -77,11 +77,11 @@ export default function Footer() {
                   Book Now
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link href="/referrals" className="hover:text-background transition">
                   Referral Program
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link href="/location" className="hover:text-background transition">
                   Location & Hours
