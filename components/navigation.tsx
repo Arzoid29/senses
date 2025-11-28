@@ -10,7 +10,7 @@ export default function Navigation() {
   const mainServices = [
     { label: "Hair Color", href: "/hair-color" },
     { label: "Hair Extensions", href: "/hair-extensions" },
-    { label: "Loss Treatment", href: "/hair-loss-treatment" }, // Acorté ligeramente el texto para que quepa mejor
+    { label: "Loss Treatment", href: "/hair-loss-treatment" },
     { label: "Replacement", href: "/hair-replacement" },
     { label: "Wigs", href: "/wigs" },
   ]

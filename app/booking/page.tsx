@@ -1,30 +1,17 @@
 "use client"
 
 import type React from "react"
-
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
-import { Calendar, Clock, User, Phone, Mail } from "lucide-react"
+import Image from "next/image"
+import { Calendar, Clock, User, Phone, Mail, CheckCircle, ChevronRight, Sparkles } from "lucide-react"
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { getServices, submitBooking, type Service } from "@/lib/api"
 
 const timeSlots = [
-  "9:00 AM",
-  "9:30 AM",
-  "10:00 AM",
-  "10:30 AM",
-  "11:00 AM",
-  "11:30 AM",
-  "2:00 PM",
-  "2:30 PM",
-  "3:00 PM",
-  "3:30 PM",
-  "4:00 PM",
-  "4:30 PM",
-  "5:00 PM",
-  "5:30 PM",
-  "6:00 PM",
+  "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
+  "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM"
 ]
 
 export default function BookingPage() {
@@ -44,12 +31,13 @@ export default function BookingPage() {
     const loadServices = async () => {
       try {
         const data = await getServices()
-        setServices(data)
+        // ARREGLO 1: Aseguramos que sea un array o array vacío, nunca null/undefined
+        setServices(Array.isArray(data) ? data : [])
       } catch (error) {
-        console.log("[v0] Error loading services:", error)
+        console.log("Error loading services:", error)
+        setServices([]) // Fallback seguro
       }
     }
-
     loadServices()
   }, [])
 
@@ -62,229 +50,288 @@ export default function BookingPage() {
     e.preventDefault()
     setIsSubmitting(true)
     try {
-      const success = await submitBooking(bookingData)
+      // Map local form shape to API Booking shape (service_id expected by the API)
+      const payload = {
+        service_id: bookingData.service,
+        date: bookingData.date,
+        time: bookingData.time,
+        name: bookingData.name,
+        email: bookingData.email,
+        phone: bookingData.phone,
+      }
+
+      const success = await submitBooking(payload)
       if (success) {
         setSubmitted(true)
-        setTimeout(() => {
-          setBookingData({
-            service: "",
-            date: "",
-            time: "",
-            name: "",
-            email: "",
-            phone: "",
-          })
-          setSubmitted(false)
-        }, 3000)
+        window.scrollTo({ top: 0, behavior: 'smooth' })
       }
     } catch (error) {
-      console.log("[v0] Booking submission error:", error)
+      console.log("Booking error:", error)
     } finally {
       setIsSubmitting(false)
     }
   }
 
-  const selectedService = services.find((s) => s.id === bookingData.service)
+  // ARREGLO 2 (Línea 87 corregida): Usamos '?.' (optional chaining)
+  const selectedService = services?.find((s) => s.id === bookingData.service)
 
-  // ... rest of component ...
+  if (submitted) {
+    return (
+      <main className="flex flex-col min-h-screen bg-neutral-50">
+        <Navigation />
+        <div className="flex-1 flex items-center justify-center px-4 py-20">
+          <div className="max-w-lg w-full bg-white p-8 rounded-2xl shadow-xl text-center border border-green-100">
+            <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6">
+              <CheckCircle className="w-10 h-10 text-green-600" />
+            </div>
+            <h2 className="font-serif text-3xl font-bold text-gray-900 mb-4">Reservation Confirmed</h2>
+            <p className="text-gray-500 mb-8">
+              Thank you, {bookingData.name}. We have received your booking request for <strong>{bookingData.date}</strong> at <strong>{bookingData.time}</strong>. Check your email for details.
+            </p>
+            <Link
+              href="/"
+              className="inline-flex items-center justify-center px-8 py-3 bg-gray-900 text-white rounded-full font-medium hover:bg-rose-600 transition-colors w-full"
+            >
+              Return Home
+            </Link>
+          </div>
+        </div>
+        <Footer />
+      </main>
+    )
+  }
+
   return (
-    <main className="flex flex-col min-h-screen">
+    <main className="flex flex-col min-h-screen bg-neutral-50">
       <Navigation />
 
-      {/* Header */}
-      <section className="bg-primary text-primary-foreground py-12 px-4">
-        <div className="max-w-7xl mx-auto text-center">
-          <h1 className="font-serif text-4xl sm:text-5xl font-bold mb-4 text-balance">Book Your Appointment</h1>
-          <p className="text-lg opacity-90 max-w-2xl mx-auto text-balance">
-            Schedule your perfect beauty experience with Senses Salon
-          </p>
+      {/* 1. Hero Compacto */}
+      <section className="relative bg-gray-900 py-20 px-4 overflow-hidden">
+        <div className="absolute inset-0 opacity-40">
+           <Image 
+             src="https://images.unsplash.com/photo-1521590832896-7ea86950890e?q=80&w=2069&auto=format&fit=crop"
+             alt="Booking Background"
+             fill
+             className="object-cover"
+           />
+        </div>
+        <div className="relative z-10 max-w-7xl mx-auto text-center">
+          <p className="text-rose-400 font-bold tracking-widest text-xs uppercase mb-3">Reservations</p>
+          <h1 className="font-serif text-4xl sm:text-5xl font-bold text-white">Secure Your Visit</h1>
         </div>
       </section>
 
-      {/* Booking Form */}
-      <section className="flex-1 py-16 px-4 bg-background">
-        <div className="max-w-3xl mx-auto">
-          <form onSubmit={handleSubmit} className="bg-card rounded-lg border border-border p-8 space-y-8">
-            {/* Service Selection */}
-            <div>
-              <label htmlFor="service" className="block text-lg font-semibold text-foreground mb-4">
-                Select Service
-              </label>
-              <select
-                id="service"
-                name="service"
-                value={bookingData.service}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
-              >
-                <option value="">Choose a service...</option>
-                {services.map((service) => (
-                  <option key={service.id} value={service.id}>
-                    {service.title} - {service.duration} ({service.price})
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Service Details */}
-            {selectedService && (
-              <div className="p-4 bg-secondary/20 rounded-lg border border-secondary/30">
-                <h3 className="font-semibold text-foreground mb-2">{selectedService.title}</h3>
-                <div className="grid grid-cols-2 gap-4 text-sm">
+      {/* 2. Layout Principal (Split View) */}
+      <section className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 py-12">
+        <div className="grid lg:grid-cols-3 gap-12">
+          
+          {/* COLUMNA IZQUIERDA: Formulario (Ocupa 2/3) */}
+          <div className="lg:col-span-2">
+            <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sm:p-10 space-y-10">
+              
+              {/* Step 1: Service & Time */}
+              <div>
+                <h3 className="font-serif text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                  <span className="w-8 h-8 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center text-sm">1</span>
+                  Select Service & Time
+                </h3>
+                
+                <div className="space-y-6 pl-10">
                   <div>
-                    <p className="text-muted-foreground">Duration</p>
-                    <p className="font-medium text-foreground">{selectedService.duration}</p>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Service</label>
+                    <div className="relative">
+                      <select
+                        name="service"
+                        value={bookingData.service}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 appearance-none"
+                      >
+                        <option value="">Select a treatment...</option>
+                        {services?.map((service) => (
+                          <option key={service.id} value={service.id}>
+                            {service.title}
+                          </option>
+                        ))}
+                      </select>
+                      <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 rotate-90" />
+                    </div>
                   </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                        <Calendar className="w-4 h-4 text-rose-600" /> Date
+                      </label>
+                      <input
+                        type="date"
+                        name="date"
+                        value={bookingData.date}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                        <Clock className="w-4 h-4 text-rose-600" /> Time
+                      </label>
+                      <div className="relative">
+                        <select
+                          name="time"
+                          value={bookingData.time}
+                          onChange={handleChange}
+                          required
+                          className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 appearance-none"
+                        >
+                          <option value="">Select time...</option>
+                          {timeSlots.map((slot) => (
+                            <option key={slot} value={slot}>{slot}</option>
+                          ))}
+                        </select>
+                        <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 rotate-90" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="border-t border-gray-100" />
+
+              {/* Step 2: Personal Details */}
+              <div>
+                <h3 className="font-serif text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                  <span className="w-8 h-8 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center text-sm">2</span>
+                  Your Information
+                </h3>
+                
+                <div className="space-y-6 pl-10">
                   <div>
-                    <p className="text-muted-foreground">Price</p>
-                    <p className="font-medium text-foreground">{selectedService.price}</p>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                    <div className="relative">
+                      <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                      <input
+                        type="text"
+                        name="name"
+                        value={bookingData.name}
+                        onChange={handleChange}
+                        placeholder="e.g. Jane Doe"
+                        required
+                        className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                      <div className="relative">
+                        <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                        <input
+                          type="email"
+                          name="email"
+                          value={bookingData.email}
+                          onChange={handleChange}
+                          placeholder="jane@example.com"
+                          required
+                          className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                      <div className="relative">
+                        <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                        <input
+                          type="tel"
+                          name="phone"
+                          value={bookingData.phone}
+                          onChange={handleChange}
+                          placeholder="(555) 000-0000"
+                          required
+                          className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500"
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            )}
 
-            {/* Date Selection */}
-            <div>
-              <label
-                htmlFor="date"
-                className="block text-lg font-semibold text-foreground mb-4 flex items-center gap-2"
-              >
-                <Calendar className="w-5 h-5 text-primary" />
-                Preferred Date
-              </label>
-              <input
-                type="date"
-                id="date"
-                name="date"
-                value={bookingData.date}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
-              />
-            </div>
+              <div className="pt-4">
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full bg-gray-900 text-white font-bold py-4 rounded-xl hover:bg-rose-600 transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-70 disabled:cursor-not-allowed"
+                >
+                  {isSubmitting ? "Processing..." : "Confirm Appointment"}
+                </button>
+              </div>
+            </form>
+          </div>
 
-            {/* Time Selection */}
-            <div>
-              <label
-                htmlFor="time"
-                className="block text-lg font-semibold text-foreground mb-4 flex items-center gap-2"
-              >
-                <Clock className="w-5 h-5 text-primary" />
-                Preferred Time
-              </label>
-              <select
-                id="time"
-                name="time"
-                value={bookingData.time}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
-              >
-                <option value="">Select a time...</option>
-                {timeSlots.map((slot) => (
-                  <option key={slot} value={slot}>
-                    {slot}
-                  </option>
-                ))}
-              </select>
-            </div>
+          {/* COLUMNA DERECHA: Resumen Sticky (Ocupa 1/3) */}
+          <div className="hidden lg:block">
+            <div className="sticky top-24">
+              <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+                <h3 className="font-serif text-lg font-bold text-gray-900 mb-4 pb-4 border-b border-gray-100">
+                  Booking Summary
+                </h3>
 
-            {/* Divider */}
-            <div className="border-t border-border" />
+                {selectedService ? (
+                  <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <p className="text-sm font-medium text-rose-600">Service</p>
+                        <p className="font-bold text-gray-900">{selectedService.title}</p>
+                      </div>
+                      <Sparkles className="w-5 h-5 text-rose-400" />
+                    </div>
+                    
+                    <div className="grid grid-cols-2 gap-4 bg-gray-50 p-3 rounded-lg">
+                      <div>
+                        <p className="text-xs text-gray-500">Duration</p>
+                        <p className="text-sm font-semibold">{selectedService.duration}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-500">Price</p>
+                        <p className="text-sm font-semibold">{selectedService.price}</p>
+                      </div>
+                    </div>
 
-            {/* Personal Information */}
-            <div>
-              <h3 className="text-lg font-semibold text-foreground mb-6">Your Information</h3>
-              <div className="space-y-6">
-                {/* Name */}
-                <div>
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-medium text-foreground mb-2 flex items-center gap-2"
-                  >
-                    <User className="w-4 h-4 text-primary" />
-                    Full Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={bookingData.name}
-                    onChange={handleChange}
-                    placeholder="Your full name"
-                    required
-                    className="w-full px-4 py-2 rounded-lg border border-border bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
-                  />
-                </div>
+                    {(bookingData.date || bookingData.time) && (
+                      <div className="bg-gray-50 p-3 rounded-lg space-y-2">
+                         {bookingData.date && (
+                           <div className="flex items-center gap-2 text-sm text-gray-700">
+                             <Calendar className="w-4 h-4 text-gray-400" />
+                             {bookingData.date}
+                           </div>
+                         )}
+                         {bookingData.time && (
+                           <div className="flex items-center gap-2 text-sm text-gray-700">
+                             <Clock className="w-4 h-4 text-gray-400" />
+                             {bookingData.time}
+                           </div>
+                         )}
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="text-center py-8 text-gray-400">
+                    <p className="text-sm">Select a service to see details</p>
+                  </div>
+                )}
+              </div>
 
-                {/* Email */}
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium text-foreground mb-2 flex items-center gap-2"
-                  >
-                    <Mail className="w-4 h-4 text-primary" />
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={bookingData.email}
-                    onChange={handleChange}
-                    placeholder="your.email@example.com"
-                    required
-                    className="w-full px-4 py-2 rounded-lg border border-border bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
-                  />
-                </div>
-
-                {/* Phone */}
-                <div>
-                  <label
-                    htmlFor="phone"
-                    className="block text-sm font-medium text-foreground mb-2 flex items-center gap-2"
-                  >
-                    <Phone className="w-4 h-4 text-primary" />
-                    Phone Number
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={bookingData.phone}
-                    onChange={handleChange}
-                    placeholder="(555) 123-4567"
-                    required
-                    className="w-full px-4 py-2 rounded-lg border border-border bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
-                  />
-                </div>
+              {/* Info Card Extra */}
+              <div className="mt-6 bg-rose-50 p-4 rounded-xl border border-rose-100">
+                <p className="text-xs font-bold text-rose-700 uppercase mb-1">Note</p>
+                <p className="text-sm text-rose-600/80">
+                  Please arrive 10 minutes before your scheduled time for a relaxed check-in experience.
+                </p>
               </div>
             </div>
+          </div>
 
-            {/* Submit Button */}
-            <div className="flex gap-4">
-              <button
-                type="submit"
-                disabled={submitted || isSubmitting}
-                className="flex-1 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition disabled:opacity-70"
-              >
-                {submitted ? "Booking Confirmed!" : isSubmitting ? "Processing..." : "Confirm Booking"}
-              </button>
-              <Link
-                href="/services"
-                className="flex-1 px-6 py-3 border border-border text-foreground rounded-lg font-semibold hover:bg-background transition text-center"
-              >
-                View Services
-              </Link>
-            </div>
-
-            {submitted && (
-              <div className="p-4 bg-green-50 border border-green-200 rounded-lg text-center">
-                <p className="text-green-800 font-medium">Booking confirmed! Check your email for details.</p>
-              </div>
-            )}
-          </form>
         </div>
       </section>
 
