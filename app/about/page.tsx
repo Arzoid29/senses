@@ -2,142 +2,135 @@ import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import { Award, Heart, Users, Lightbulb } from "lucide-react"
 
+interface TeamMember {
+  id: string
+  name: string
+  role: string
+  image: string
+  credentials: string[]
+  bio?: string
+  specialties?: string[]
+}
+
+const teamMembers: TeamMember[] = [
+  {
+    id: "joe-tucci",
+    name: "Joe Tucci",
+    role: "Creative Director / Owner",
+    image: "/professional-headshot-woman.jpg",
+    credentials: [
+      "Hair loss Expert / NHLMA Certified",
+      "International Board Certified Hair Colorist",
+      "Certified Master Hair Colorist (American Board of Certified Hair Colorists)",
+      "Certified Instructor for SHE by SOCAP Hair Extensions",
+      "International Educator and Platform Artist (MLH international – Italy + Germany)",
+      "National Educator and Platform Artist (Hair America, National Cosmetology Association, Helix Hair Academy, SHE by SOCAP)",
+      "International and National Hair Competitor in Men's Hairstyling",
+      "World Cup Supreme – Avant Garde – Bronze",
+      "Americas Cup Classic Men's Hairstyling: Bronze",
+      "Americas Cup Consumer's Men's Hairstyling: Bronze",
+      "Vidal Sassoon Academy – Santa Monica CA",
+      "MLH Academy – Vasto Italy",
+      "Helix Academy – Tennessee",
+      "London School of Makeup – Toronto Canada (Fashion, theatrical and special effects makeup)",
+      "Westchester Cosmetology Association / President 4 years / Vice President 2 years",
+    ],
+    bio: "At Senses, we work as a team. We all specialize in different facets of hair styling. Please let us know what your needs are and we can better direct you to a particular stylist.",
+  },
+  {
+    id: "jane-doe",
+    name: "Jane Doe",
+    role: "Senior Stylist",
+    image: "/placeholder.svg",
+    credentials: [
+      "Certified Master Stylist",
+      "Specialist in Balayage and Color Correction",
+      "10+ Years Experience in High-End Salons",
+    ],
+    bio: "Passionate about creating personalized looks that enhance natural beauty. Expert in modern cutting techniques and creative color.",
+  },
+]
+
 export default function AboutPage() {
   return (
     <main className="flex flex-col min-h-screen">
       <Navigation />
 
-      <section className="bg-primary text-primary-foreground py-16 px-4">
-        <div className="max-w-7xl mx-auto text-center">
-          <h1 className="font-serif text-5xl sm:text-6xl font-bold mb-6 text-balance">WHO WE ARE</h1>
-          <p className="text-lg opacity-90 max-w-3xl mx-auto text-balance">
+      <section className="relative h-96 bg-gradient-to-r from-primary to-primary/80 flex items-center justify-center text-center px-4">
+        <div className="max-w-3xl mx-auto">
+          <h1 className="font-serif text-5xl sm:text-6xl font-bold mb-6 text-balance text-primary-foreground">
+            WHO WE ARE
+          </h1>
+          <p className="text-lg text-primary-foreground/90 max-w-3xl mx-auto text-balance">
             Meet the creative minds behind Senses Salon
           </p>
         </div>
       </section>
 
       <section className="py-16 px-4 bg-card">
-        <div className="max-w-4xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
-            {/* Profile Image */}
-            <div className="md:col-span-1">
-              <div className="bg-gray-300 aspect-square rounded-lg overflow-hidden">
-                <img src="/professional-headshot-woman.jpg" alt="Joe Tucci" className="w-full h-full object-cover" />
-              </div>
-            </div>
-
-            {/* Content */}
-            <div className="md:col-span-2">
-              <h2 className="font-serif text-3xl font-bold text-foreground mb-2">Creative Director / Owner</h2>
-              <p className="text-accent text-lg font-semibold mb-6">Joe Tucci</p>
-
-              <div className="space-y-4 mb-8">
-                <ul className="space-y-2 text-foreground">
-                  <li className="flex items-start gap-2">
-                    <span className="text-accent font-bold mt-1">•</span>
-                    <span>Hair loss Expert / NHLMA Certified</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-accent font-bold mt-1">•</span>
-                    <span>International Board Certified Hair Colorist</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-accent font-bold mt-1">•</span>
-                    <span>Certified Master Hair Colorist (American Board of Certified Hair Colorists)</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-accent font-bold mt-1">•</span>
-                    <span>Certified Instructor for SHE by SOCAP Hair Extensions</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-accent font-bold mt-1">•</span>
-                    <span>International Educator and Platform Artist (MLH international – Italy + Germany)</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-accent font-bold mt-1">•</span>
-                    <span>
-                      National Educator and Platform Artist (Hair America, National Cosmetology Association, Helix Hair
-                      Academy, SHE by SOCAP)
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-accent font-bold mt-1">•</span>
-                    <span>International and National Hair Competitor in Men's Hairstyling</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-accent font-bold mt-1">•</span>
-                    <span>World Cup Supreme – Avant Garde – Bronze</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-accent font-bold mt-1">•</span>
-                    <span>Americas Cup Classic Men's Hairstyling: Bronze</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-accent font-bold mt-1">•</span>
-                    <span>Americas Cup Consumer's Men's Hairstyling: Bronze</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-accent font-bold mt-1">•</span>
-                    <span>Vidal Sassoon Academy – Santa Monica CA</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-accent font-bold mt-1">•</span>
-                    <span>MLH Academy – Vasto Italy</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-accent font-bold mt-1">•</span>
-                    <span>Helix Academy – Tennessee</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-accent font-bold mt-1">•</span>
-                    <span>
-                      London School of Makeup – Toronto Canada (Fashion, theatrical and special effects makeup)
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-accent font-bold mt-1">•</span>
-                    <span>Westchester Cosmetology Association / President 4 years / Vice President 2 years</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="bg-muted p-6 rounded-lg">
-                <p className="text-foreground leading-relaxed mb-4">
-                  At Senses, we work as a team. We all specialize in different facets of hair styling. Please let us
-                  know what your needs are and we can better direct you to a particular stylist.
-                </p>
-                <div className="flex flex-wrap gap-3">
-                  <a href="/services" className="text-accent font-medium hover:underline">
-                    Cut & Style
-                  </a>
-                  <span className="text-gray-400">•</span>
-                  <a href="/services" className="text-accent font-medium hover:underline">
-                    Coloring
-                  </a>
-                  <span className="text-gray-400">•</span>
-                  <a href="/services" className="text-accent font-medium hover:underline">
-                    Extensions
-                  </a>
-                  <span className="text-gray-400">•</span>
-                  <a href="/services" className="text-accent font-medium hover:underline">
-                    Texturing
-                  </a>
-                  <span className="text-gray-400">•</span>
-                  <a href="/services" className="text-accent font-medium hover:underline">
-                    Treatments
-                  </a>
-                  <span className="text-gray-400">•</span>
-                  <a href="/services" className="text-accent font-medium hover:underline">
-                    Wedding
-                  </a>
-                  <span className="text-gray-400">•</span>
-                  <a href="/services" className="text-accent font-medium hover:underline">
-                    Hair Replacement
-                  </a>
+        <div className="max-w-4xl mx-auto space-y-24">
+          {teamMembers.map((member) => (
+            <div key={member.id} className="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
+              {/* Profile Image */}
+              <div className="md:col-span-1">
+                <div className="bg-gray-300 aspect-square rounded-lg overflow-hidden">
+                  <img src={member.image || "/placeholder.svg"} alt={member.name} className="w-full h-full object-cover" />
                 </div>
               </div>
+
+              {/* Content */}
+              <div className="md:col-span-2">
+                <h2 className="font-serif text-3xl font-bold text-foreground mb-2">{member.role}</h2>
+                <p className="text-accent text-lg font-semibold mb-6">{member.name}</p>
+
+                <div className="space-y-4 mb-8">
+                  <ul className="space-y-2 text-foreground">
+                    {member.credentials.map((credential, index) => (
+                      <li key={index} className="flex items-start gap-2">
+                        <span className="text-accent font-bold mt-1">•</span>
+                        <span>{credential}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {member.bio && (
+                  <div className="bg-muted p-6 rounded-lg">
+                    <p className="text-foreground leading-relaxed mb-4">{member.bio}</p>
+                    <div className="flex flex-wrap gap-3">
+                      <a href="/services" className="text-accent font-medium hover:underline">
+                        Cut & Style
+                      </a>
+                      <span className="text-gray-400">•</span>
+                      <a href="/services" className="text-accent font-medium hover:underline">
+                        Coloring
+                      </a>
+                      <span className="text-gray-400">•</span>
+                      <a href="/services" className="text-accent font-medium hover:underline">
+                        Extensions
+                      </a>
+                      <span className="text-gray-400">•</span>
+                      <a href="/services" className="text-accent font-medium hover:underline">
+                        Texturing
+                      </a>
+                      <span className="text-gray-400">•</span>
+                      <a href="/services" className="text-accent font-medium hover:underline">
+                        Treatments
+                      </a>
+                      <span className="text-gray-400">•</span>
+                      <a href="/services" className="text-accent font-medium hover:underline">
+                        Wedding
+                      </a>
+                      <span className="text-gray-400">•</span>
+                      <a href="/services" className="text-accent font-medium hover:underline">
+                        Hair Replacement
+                      </a>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
+          ))}
         </div>
       </section>
 
