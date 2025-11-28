@@ -109,7 +109,7 @@ export default function FeaturedServices() {
             href="/services"
             className="inline-flex items-center justify-center px-8 py-3 border border-gray-300 text-gray-900 rounded-full font-medium hover:bg-black hover:text-white hover:border-black transition-all duration-300"
           >
-            View Full Servicesz
+            View Full Services
           </Link>
         </div>
       </div>
