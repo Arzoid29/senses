@@ -85,23 +85,13 @@ export default function Navigation() {
             <div className="h-8 w-px bg-gray-200"></div>
 
             {/* Botón CTA */}
-            <Link
-              href="/booking"
-              className="inline-flex items-center justify-center px-6 py-2.5 bg-gray-900 text-white text-sm font-medium rounded-full hover:bg-rose-600 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5"
-            >
-              Book Now
-            </Link>
+           
           </div>
 
           {/* Botón Menú Móvil (Visible en pantallas medianas hacia abajo) */}
           <div className="flex items-center gap-4 lg:hidden">
             {/* Versión móvil del botón Book */}
-            <Link
-              href="/booking"
-              className="sm:hidden inline-flex px-4 py-2 bg-gray-900 text-white text-xs font-bold rounded-full"
-            >
-              Book
-            </Link>
+            
             
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -166,13 +156,6 @@ export default function Navigation() {
                     <MapPin size={18} />
                     <span className="text-sm">123 Beauty Lane, Luxury City</span>
                  </div>
-                 <Link
-                  href="/booking"
-                  onClick={() => setIsOpen(false)}
-                  className="block w-full py-4 bg-gray-900 text-white text-center font-bold rounded-xl text-lg hover:bg-rose-600 transition-colors"
-                >
-                  Book Appointment
-                </Link>
               </div>
             </div>
           </div>

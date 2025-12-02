@@ -68,15 +68,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:text-background transition">
+                <Link href="/location" className="hover:text-background transition">
                   Contact
                 </Link>
               </li>
-              <li>
-                <Link href="/booking" className="hover:text-background transition">
-                  Book Now
-                </Link>
-              </li>
+             
               {/* <li>
                 <Link href="/referrals" className="hover:text-background transition">
                   Referral Program
@@ -91,39 +87,7 @@ export default function Footer() {
           </div>
 
           {/* Social */}
-          <div>
-            <h3 className="font-serif font-bold text-lg mb-4">Follow Us</h3>
-            <div className="flex gap-4">
-              <a
-                href="https://instagram.com"
-                className="w-10 h-10 bg-background/20 rounded-lg flex items-center justify-center hover:bg-background/30 transition"
-                aria-label="Instagram"
-              >
-                <Instagram className="w-5 h-5" />
-              </a>
-              <a
-                href="https://facebook.com"
-                className="w-10 h-10 bg-background/20 rounded-lg flex items-center justify-center hover:bg-background/30 transition"
-                aria-label="Facebook"
-              >
-                <Facebook className="w-5 h-5" />
-              </a>
-              <a
-                href="https://twitter.com"
-                className="w-10 h-10 bg-background/20 rounded-lg flex items-center justify-center hover:bg-background/30 transition"
-                aria-label="Twitter"
-              >
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a
-                href="https://linkedin.com"
-                className="w-10 h-10 bg-background/20 rounded-lg flex items-center justify-center hover:bg-background/30 transition"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="w-5 h-5" />
-              </a>
-            </div>
-          </div>
+          
         </div>
 
         {/* Bottom */}

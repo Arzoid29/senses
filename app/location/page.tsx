@@ -25,7 +25,7 @@ export default function LocationPage() {
           <p className="text-xs font-bold tracking-[0.2em] uppercase mb-4 opacity-90">Visit Us</p>
           <h1 className="font-serif text-5xl sm:text-7xl font-bold mb-6">Our Sanctuary</h1>
           <p className="text-lg font-light max-w-xl mx-auto text-white/90">
-            A space designed for your comfort located in the heart of Luxury City.
+            A space designed for your comfort located in Croton-on-Hudson.
           </p>
         </div>
       </section>
@@ -41,7 +41,7 @@ export default function LocationPage() {
             <div>
               <h2 className="font-serif text-3xl font-bold text-gray-900 mb-6">Contact & Hours</h2>
               <p className="text-gray-500 leading-relaxed">
-                We are conveniently located downtown with dedicated parking. 
+                We are conveniently located on Old Post Road South. 
                 Experience luxury from the moment you arrive.
               </p>
             </div>
@@ -54,9 +54,14 @@ export default function LocationPage() {
                 </div>
                 <div>
                   <h3 className="font-serif text-lg font-bold text-gray-900 mb-1">Visit Us</h3>
-                  <p className="text-gray-600">123 Beauty Lane, Suite 100</p>
-                  <p className="text-gray-600">Luxury City, ST 12345</p>
-                  <a href="#map" className="inline-flex items-center text-sm font-bold text-rose-600 mt-2 hover:underline">
+                  <p className="text-gray-600">5 Old Post Road South</p>
+                  <p className="text-gray-600">Croton-on-Hudson, NY 10520</p>
+                  <a 
+                    href="https://maps.google.com/?q=5+Old+Post+Road+South+Croton-on-Hudson+NY+10520" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-sm font-bold text-rose-600 mt-2 hover:underline"
+                  >
                     Get Directions <ArrowRight className="w-4 h-4 ml-1" />
                   </a>
                 </div>
@@ -68,8 +73,8 @@ export default function LocationPage() {
                 </div>
                 <div>
                   <h3 className="font-serif text-lg font-bold text-gray-900 mb-1">Call Us</h3>
-                  <p className="text-gray-600">(555) 123-4567</p>
-                  <p className="text-sm text-gray-400 mt-1">Mon-Sat, 9am - 7pm</p>
+                  <p className="text-gray-600">(914) 271-4005</p>
+                  <p className="text-sm text-gray-400 mt-1">Book your appointment today</p>
                 </div>
               </div>
 
@@ -79,14 +84,14 @@ export default function LocationPage() {
                 </div>
                 <div>
                   <h3 className="font-serif text-lg font-bold text-gray-900 mb-1">Email Us</h3>
-                  <p className="text-gray-600">concierge@sensessalon.com</p>
+                  <p className="text-gray-600">info@sensessalon.com</p>
                 </div>
               </div>
             </div>
 
             <hr className="border-gray-100" />
 
-            {/* Horarios (Diseño limpio) */}
+            {/* Horarios (Actualizados) */}
             <div>
               <div className="flex items-center gap-3 mb-6">
                 <Clock className="w-5 h-5 text-rose-600" />
@@ -94,35 +99,39 @@ export default function LocationPage() {
               </div>
               <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm space-y-4">
                 <div className="flex justify-between items-center border-b border-gray-50 pb-3">
-                  <span className="text-gray-600 font-medium">Monday - Friday</span>
+                  <span className="text-gray-600 font-medium">Tuesday & Wednesday</span>
+                  <span className="font-bold text-gray-900">9:30 AM - 5:00 PM</span>
+                </div>
+                <div className="flex justify-between items-center border-b border-gray-50 pb-3">
+                  <span className="text-gray-600 font-medium">Thursday & Friday</span>
                   <span className="font-bold text-gray-900">9:00 AM - 7:00 PM</span>
                 </div>
                 <div className="flex justify-between items-center border-b border-gray-50 pb-3">
                   <span className="text-gray-600 font-medium">Saturday</span>
-                  <span className="font-bold text-gray-900">10:00 AM - 6:00 PM</span>
+                  <span className="font-bold text-gray-900">8:30 AM - 5:00 PM</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600 font-medium">Sunday</span>
+                  <span className="text-gray-600 font-medium">Sunday & Monday</span>
                   <span className="text-rose-600 font-bold">Closed</span>
                 </div>
               </div>
             </div>
 
-            {/* Amenidades (Grid Bento) */}
+            {/* Amenidades */}
             <div>
               <h3 className="font-serif text-2xl font-bold text-gray-900 mb-6">Our Amenities</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="p-4 bg-white rounded-xl border border-gray-100 flex items-center gap-4 hover:shadow-md transition-shadow">
                   <Car className="w-5 h-5 text-rose-600" />
-                  <span className="font-medium text-gray-700">Free Valet Parking</span>
+                  <span className="font-medium text-gray-700">Easy Parking</span>
                 </div>
                 <div className="p-4 bg-white rounded-xl border border-gray-100 flex items-center gap-4 hover:shadow-md transition-shadow">
                   <Wifi className="w-5 h-5 text-rose-600" />
-                  <span className="font-medium text-gray-700">High-Speed Wi-Fi</span>
+                  <span className="font-medium text-gray-700">Complimentary Wi-Fi</span>
                 </div>
                 <div className="p-4 bg-white rounded-xl border border-gray-100 flex items-center gap-4 hover:shadow-md transition-shadow">
                   <Coffee className="w-5 h-5 text-rose-600" />
-                  <span className="font-medium text-gray-700">Artisan Coffee Bar</span>
+                  <span className="font-medium text-gray-700">Refreshments</span>
                 </div>
                 <div className="p-4 bg-white rounded-xl border border-gray-100 flex items-center gap-4 hover:shadow-md transition-shadow">
                   <Accessibility className="w-5 h-5 text-rose-600" />
@@ -140,9 +149,8 @@ export default function LocationPage() {
               height="100%"
               frameBorder="0"
               style={{ border: 0 }}
-              // Nota: El filtro grayscale hace que el mapa se vea super elegante
               className="w-full h-full filter grayscale hover:grayscale-0 transition-all duration-700"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.184126372557!2d-73.98773192404069!3d40.75797467138682!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25855c6480299%3A0x55194ec5a1ae072e!2sTimes%20Square!5e0!3m2!1sen!2sus!4v1709123456789!5m2!1sen!2sus"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3007.962660237937!2d-73.88277268458396!3d41.20341797928139!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2c07923f0b2d3%3A0x6b77209995802342!2s5%20Old%20Post%20Rd%20S%2C%20Croton-On-Hudson%2C%20NY%2010520!5e0!3m2!1sen!2sus!4v1625686000000!5m2!1sen!2sus"
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"

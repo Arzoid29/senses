@@ -3,115 +3,95 @@
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import Link from "next/link"
+import { MapPin } from "lucide-react"
 
 export default function HairLossTreatmentPage() {
-  const services = [
+  const treatments = [
     {
-      id: "scalp-eval",
       title: "Complimentary Scalp Evaluation",
-      description: "Free professional assessment of your scalp and hair condition to determine best treatment options.",
-      price: "FREE",
-      duration: "30 min",
-      image: "/professional-hair-treatment-ultrasound.jpg",
+      description: "Free professional assessment of your scalp and hair condition to determine best treatment options. We analyze your scalp health to create a personalized plan.",
     },
     {
-      id: "scalp-treatment",
       title: "Detox Scalp Treatment",
-      description: "Deep cleansing and detoxifying treatment to remove buildup and promote healthy hair growth.",
-      price: "$65",
-      duration: "45 min",
-      image: "/professional-hair-treatment-ultrasound.jpg",
+      description: "Deep cleansing and detoxifying treatment to remove buildup and promote healthy hair growth. Essential for clearing follicles and creating an optimal environment for growth.",
     },
     {
-      id: "trichology-treatment",
       title: "Trichology Treatment",
-      description: "Specialized hair and scalp treatment using trichology expertise to address hair loss causes.",
-      price: "$40",
-      duration: "30 min",
-      image: "/professional-hair-treatment-ultrasound.jpg",
+      description: "Specialized hair and scalp treatment using trichology expertise to address the root causes of hair loss. A scientific approach to hair health.",
     },
     {
-      id: "moisture-infusion",
       title: "Moisture Infusion Treatment",
-      description: "Intensive moisture therapy to strengthen and revitalize thinning or damaged hair.",
-      price: "$40",
-      duration: "30 min",
-      image: "/professional-hair-treatment-ultrasound.jpg",
+      description: "Intensive moisture therapy to strengthen and revitalize thinning or damaged hair. Restores elasticity and shine to brittle strands.",
     },
     {
-      id: "ultra-conditioning",
       title: "Ultra Conditioning Treatment",
-      description: "Advanced conditioning using ultrasound and infrared light technology for maximum penetration.",
-      price: "$200 per session / $1000/year",
-      duration: "60 min",
-      image: "/professional-hair-treatment-ultrasound.jpg",
+      description: "Advanced conditioning using ultrasound and infrared light technology for maximum penetration. Deeply repairs hair structure from the inside out.",
     },
     {
-      id: "precision-cut",
       title: "Precision Scalp Cut",
-      description: "Specialized cutting technique combined with scalp therapy for hair loss management.",
-      price: "$60 - $80",
-      duration: "60 min",
-      image: "/professional-hair-treatment-ultrasound.jpg",
+      description: "Specialized cutting technique combined with scalp therapy for hair loss management. Designed to maximize volume and coverage while maintaining style.",
     },
   ]
 
   return (
-    <main className="flex flex-col min-h-screen">
+    <main className="flex flex-col min-h-screen bg-background">
       <Navigation />
 
-      {/* Hero Section */}
-      <section className="relative h-96 bg-gradient-to-r from-primary to-primary/80 flex items-center justify-center text-center px-4">
-        <div className="max-w-3xl mx-auto">
-          <h1 className="font-serif text-5xl font-bold text-primary-foreground mb-4 text-balance">
-            Hair Loss Treatment
+      {/* Header Informativo */}
+      <section className="pt-32 pb-12 px-4 bg-muted/30 border-b border-border">
+        <div className="max-w-3xl mx-auto text-center">
+          <p className="text-sm font-bold tracking-widest text-primary uppercase mb-4">
+            Advanced Care
+          </p>
+          <h1 className="font-serif text-4xl sm:text-5xl font-bold text-foreground mb-6">
+            Hair Loss Treatments
           </h1>
-          <p className="text-lg text-primary-foreground/90 text-balance">
+          <p className="text-lg text-muted-foreground leading-relaxed">
             Address hair loss with professional treatments and expert care. Our specialized therapies help strengthen
-            and restore your hair.
+            and restore your hair, promoting a healthy scalp environment for regrowth.
           </p>
         </div>
       </section>
 
-      {/* Services Grid */}
-      <section className="flex-1 py-16 px-4 bg-background">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            {services.map((service) => (
+      {/* Grid de Tratamientos */}
+      <section className="py-20 px-4">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8">
+            {treatments.map((treatment, index) => (
               <div
-                key={service.id}
-                className="bg-card rounded-lg overflow-hidden border border-border hover:shadow-lg transition"
+                key={index}
+                className="bg-card p-8 rounded-xl border border-border shadow-sm hover:shadow-md transition-all duration-300"
               >
-                <div className="h-48 bg-muted overflow-hidden">
-                  <img
-                    src={service.image || "/placeholder.svg"}
-                    alt={service.title}
-                    className="w-full h-full object-cover hover:scale-105 transition duration-300"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="font-serif text-2xl font-bold mb-2 text-foreground">{service.title}</h3>
-                  <p className="text-muted-foreground mb-4">{service.description}</p>
-                  <div className="flex justify-between items-center mb-4 pb-4 border-b border-border">
-                    <div>
-                      <p className="text-sm text-muted-foreground">Price</p>
-                      <p className="font-semibold text-primary">{service.price}</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-sm text-muted-foreground">Duration</p>
-                      <p className="font-semibold text-foreground">{service.duration}</p>
-                    </div>
-                  </div>
-                  <Link
-                    href="/booking"
-                    className="inline-flex w-full items-center justify-center px-4 py-2 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition"
-                  >
-                    Book Now
-                  </Link>
-                </div>
+                <div className="h-1 w-12 bg-primary mb-6 rounded-full"></div>
+                <h3 className="font-serif text-xl font-bold text-foreground mb-3">
+                  {treatment.title}
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  {treatment.description}
+                </p>
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Visit Us CTA */}
+      <section className="py-24 px-4 bg-foreground text-background">
+        <div className="max-w-xl mx-auto text-center space-y-8">
+          <h2 className="font-serif text-3xl md:text-4xl font-bold">
+            Start Your Restoration Journey
+          </h2>
+          <p className="text-background/80 text-lg">
+            Don't wait to address hair loss. Visit our salon for a professional evaluation and personalized treatment plan.
+          </p>
+
+          <Link
+            href="/location"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-background text-foreground rounded-full font-bold hover:bg-gray-100 transition-all transform hover:-translate-y-1"
+          >
+            <MapPin className="w-5 h-5" />
+            Visit Us
+          </Link>
         </div>
       </section>
 

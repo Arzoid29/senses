@@ -1,44 +1,60 @@
 "use client"
 
 import type React from "react"
-
 import { useState, useEffect } from "react"
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
-import { Scissors, Sparkles, Leaf, Zap } from "lucide-react"
+import { Scissors, Sparkles, Leaf, Zap, Layers } from "lucide-react"
 import Link from "next/link"
-import { getServices, type Service } from "@/lib/api"
+import { getServices, getCategories, type Service, type Category } from "@/lib/api"
 
-const categories = ["All", "Hair Styling", "Skincare", "Wellness", "Makeup"]
+// Mapeo de iconos (añadí un fallback 'Layers' por si la API trae categorías nuevas)
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   "Hair Styling": Scissors,
-  Skincare: Sparkles,
-  Wellness: Leaf,
-  Makeup: Zap,
+  "Hair": Scissors, 
+  "Skincare": Sparkles,
+  "Skin": Sparkles,
+  "Wellness": Leaf,
+  "Massage": Leaf,
+  "Makeup": Zap,
 }
 
 export default function ServicesPage() {
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [services, setServices] = useState<Service[]>([])
+  const [categories, setCategories] = useState<string[]>(["All"])
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    const loadServices = async () => {
+    const loadData = async () => {
+      setIsLoading(true)
       try {
-        const data = await getServices()
-        setServices(data)
+        // Carga paralela de servicios y categorías
+        const [fetchedServices, fetchedCategories] = await Promise.all([
+          getServices(),
+          getCategories()
+        ])
+
+        setServices(fetchedServices)
+
+        // Extraer nombres de categorías de la API
+        const categoryNames = fetchedCategories.map((c: Category) => c.name)
+        setCategories(["All", ...categoryNames])
+
       } catch (error) {
-        console.log("[v0] Error loading services:", error)
+        console.error("Error loading page data:", error)
       } finally {
         setIsLoading(false)
       }
     }
 
-    loadServices()
+    loadData()
   }, [])
 
   const filteredServices =
-    selectedCategory === "All" ? services : services.filter((service) => service.category === selectedCategory)
+    selectedCategory === "All" 
+      ? services 
+      : services.filter((service) => service.category === selectedCategory)
 
   return (
     <main className="flex flex-col min-h-screen">
@@ -54,7 +70,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Category Filter */}
+      {/* Category Filter Dinámico */}
       <section className="bg-card py-8 px-4 border-b border-border">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-wrap gap-3 justify-center">
@@ -62,7 +78,7 @@ export default function ServicesPage() {
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-6 py-2 rounded-lg font-medium transition ${
+                className={`px-6 py-2 rounded-lg font-medium transition capitalize ${
                   selectedCategory === category
                     ? "bg-primary text-primary-foreground"
                     : "bg-background text-foreground border border-border hover:border-primary"
@@ -79,29 +95,39 @@ export default function ServicesPage() {
       <section className="flex-1 py-16 px-4 bg-background">
         <div className="max-w-7xl mx-auto">
           {isLoading ? (
-            <div className="text-center py-12">
+            <div className="text-center py-20">
               <p className="text-muted-foreground">Loading services...</p>
+            </div>
+          ) : filteredServices.length === 0 ? (
+             <div className="text-center py-20">
+              <p className="text-muted-foreground text-lg">No services found.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredServices.map((service) => {
-                const Icon = iconMap[service.category] || Sparkles
+                const Icon = iconMap[service.category] || Layers 
+                
                 return (
                   <div
                     key={service.id}
-                    className="group bg-card rounded-lg overflow-hidden border border-border hover:border-primary transition hover:shadow-lg duration-300"
+                    className="group bg-card rounded-lg overflow-hidden border border-border hover:border-primary transition hover:shadow-lg duration-300 flex flex-col"
                   >
                     {/* Service Image */}
                     <div className="relative h-56 overflow-hidden bg-muted">
                       <img
-                        src={service.image || "/placeholder.svg"}
+                        src={service.image}
                         alt={service.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                        // Fallback simple si la imagen falla
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = "/placeholder.svg";
+                        }}
                       />
                     </div>
 
                     {/* Service Content */}
-                    <div className="p-6">
+                    <div className="p-6 flex flex-col flex-1">
                       <div className="flex items-center gap-2 mb-2">
                         <Icon className="w-4 h-4 text-primary" />
                         <span className="text-xs font-medium text-primary uppercase tracking-wide">
@@ -109,27 +135,23 @@ export default function ServicesPage() {
                         </span>
                       </div>
                       <h3 className="font-serif text-xl font-bold text-foreground mb-2">{service.title}</h3>
-                      <p className="text-sm text-muted-foreground mb-4">{service.description}</p>
+                      <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{service.description}</p>
 
-                      {/* Price and Duration */}
-                      <div className="flex items-center justify-between mb-4 pb-4 border-b border-border">
-                        <div>
-                          <p className="text-xs text-muted-foreground">Price</p>
-                          <p className="font-semibold text-primary">{service.price}</p>
+                      <div className="mt-auto">
+                        <div className="flex items-center justify-between mb-4 pb-4 border-b border-border">
+                          <div>
+                            <p className="text-xs text-muted-foreground">Price</p>
+                            <p className="font-semibold text-primary">{service.price}</p>
+                          </div>
+                          <div className="text-right">
+                            <p className="text-xs text-muted-foreground">Duration</p>
+                            <p className="font-semibold text-foreground">{service.duration}</p>
+                          </div>
                         </div>
-                        <div className="text-right">
-                          <p className="text-xs text-muted-foreground">Duration</p>
-                          <p className="font-semibold text-foreground">{service.duration}</p>
-                        </div>
+
+                        {/* AQUÍ ESTÁ EL CAMBIO CLAVE: Redirige a /booking con el ID */}
+                       
                       </div>
-
-                      {/* CTA */}
-                      <Link
-                        href={`/services/${service.id}`}
-                        className="inline-flex w-full items-center justify-center px-4 py-2 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition"
-                      >
-                        Book Now
-                      </Link>
                     </div>
                   </div>
                 )

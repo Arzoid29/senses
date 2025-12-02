@@ -4,66 +4,89 @@ import { Geist, Geist_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 
-const _geist = Geist({ subsets: ["latin"] })
-const _geistMono = Geist_Mono({ subsets: ["latin"] })
+const geist = Geist({
+  subsets: ["latin"],
+  variable: "--font-sans", 
+})
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono", 
+})
 
 export const metadata: Metadata = {
-  title: "Senses Salon - Premium Hair & Wellness Services | NYC",
+  metadataBase: new URL("https://sensessalon.com"),
+  title: {
+    default: "Senses Salon - Premium Hair & Wellness Services",
+    template: "%s | Senses Salon", 
+  },
   description:
-    "Experience expert hair replacement, extensions, color, and wellness services at Senses Salon. Specializing in men's hair loss solutions. Creating Your Image since day one.",
+    "Expert hair replacement, extensions, color, and wellness services in Croton-on-Hudson, NY. Specializing in men's hair loss solutions, custom wigs, and scalp treatments.",
   keywords: [
-    "hair replacement",
-    "men's hair loss",
-    "hair extensions",
-    "hair color",
-    "salon NYC",
-    "wellness services",
-    "hair treatment",
+    "Senses Salon",
+    "hair replacement NYC",
+    "men's hair loss solutions",
+    "hair extensions Westchester",
+    "hair color specialist",
+    "custom wigs",
+    "scalp treatments",
+    "trichology",
+    "Croton-on-Hudson salon",
+    "balayage",
+    "wellness spa",
   ],
   authors: [{ name: "Senses Salon" }],
-  metadataBase: new URL("https://sensessalon.com"),
+  creator: "Senses Salon",
+  publisher: "Senses Salon",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   alternates: {
-    canonical: "https://sensessalon.com",
+    canonical: "/",
   },
   openGraph: {
     title: "Senses Salon - Creating Your Image",
-    description: "Premium hair replacement and wellness services in NYC",
+    description: "Premium hair replacement, custom wigs, and wellness services in Westchester, NY.",
     url: "https://sensessalon.com",
     siteName: "Senses Salon",
+    locale: "en_US",
+    type: "website",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Senses Salon",
+        alt: "Senses Salon Interior",
       },
     ],
-    locale: "en_US",
-    type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "Senses Salon - Creating Your Image",
-    description: "Premium hair replacement and wellness services",
+    description: "Premium hair replacement and wellness services.",
     images: ["/og-image.jpg"],
   },
-  generator: "v0.app",
   icons: {
-    icon: [
-      {
-        url: "/icon-light-32x32.png",
-        media: "(prefers-color-scheme: light)",
-      },
-      {
-        url: "/icon-dark-32x32.png",
-        media: "(prefers-color-scheme: dark)",
-      },
-      {
-        url: "/icon.svg",
-        type: "image/svg+xml",
-      },
-    ],
-    apple: "/apple-icon.png",
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
+    apple: "/icon.svg",
+    other: {
+      rel: "apple-touch-icon-precomposed",
+      url: "/icon.svg",
+    },
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 }
 
@@ -84,12 +107,12 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${geist.variable} ${geistMono.variable}`}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
-      <body className={`font-sans antialiased`}>
+      <body className="font-sans antialiased min-h-screen bg-background text-foreground">
         {children}
         <Analytics />
       </body>

@@ -3,57 +3,33 @@
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import Link from "next/link"
-import { CheckCircle, Award, Users, Zap } from "lucide-react"
+import { CheckCircle, Award, Users, Zap, MapPin } from "lucide-react"
 
 export default function HairReplacementPage() {
-  const services = [
+  const solutions = [
     {
-      id: "hair-replacement-consultation",
       title: "Hair Replacement Consultation",
-      description: "One-on-one consultation to explore all hair replacement options and find your perfect solution.",
-      price: "FREE",
-      duration: "45 min",
-      image: "/professional-hair-replacement-solutions.jpg",
+      description: "One-on-one consultation to explore all hair replacement options and find your perfect solution. We discuss your lifestyle, budget, and desired look in a private setting.",
     },
     {
-      id: "hair-replacement-extensions",
       title: "Hair Extensions",
-      description: "Strand-by-strand, clip-in, or tape-in extensions for quick volume and length restoration.",
-      price: "$120 - $400",
-      duration: "120-240 min",
-      image: "/professional-hair-replacement-solutions.jpg",
+      description: "Strand-by-strand, clip-in, or tape-in extensions for quick volume and length restoration. Ideal for early stages of thinning or adding density.",
     },
     {
-      id: "hair-replacement-toppers",
       title: "Hair Toppers",
-      description: "Partial hairpieces that cover thinning areas or bald spots with a natural appearance.",
-      price: "$200 - $600",
-      duration: "60 min fitting",
-      image: "/professional-hair-replacement-solutions.jpg",
+      description: "Partial hairpieces designed to cover thinning areas or bald spots with a completely natural appearance. Seamlessly integrates with your existing hair.",
     },
     {
-      id: "hair-replacement-wigs",
       title: "Full Wigs",
-      description: "Complete wig solutions in synthetic or real hair for total hair replacement.",
-      price: "$150 - $800",
-      duration: "60 min fitting",
-      image: "/professional-hair-replacement-solutions.jpg",
+      description: "Complete wig solutions in synthetic or real hair for total hair replacement. Custom-fitted for maximum comfort and styled to your preference.",
     },
     {
-      id: "hair-replacement-halos",
       title: "Halos & Hair Bands",
-      description: "Non-invasive halo hairpieces for instant added volume and length.",
-      price: "$100 - $400",
-      duration: "30 min fitting",
-      image: "/professional-hair-replacement-solutions.jpg",
+      description: "Non-invasive halo hairpieces for instant added volume and length without clips or glue. Perfect for occasional wear or sensitive scalps.",
     },
     {
-      id: "hair-replacement-mens",
       title: "Men's Hair Solutions",
-      description: "Modern hair loss solutions for men including hairpieces and advanced treatments.",
-      price: "$150 - $700",
-      duration: "60 min consultation",
-      image: "/professional-hair-replacement-solutions.jpg",
+      description: "Modern, non-surgical hair loss solutions for men. We create undetectable systems that allow you to swim, shower, and live your life with confidence.",
     },
   ]
 
@@ -82,9 +58,10 @@ export default function HairReplacementPage() {
   ]
 
   return (
-    <main className="flex flex-col min-h-screen">
+    <main className="flex flex-col min-h-screen bg-background">
       <Navigation />
 
+      {/* Hero Section */}
       <section className="relative h-96 bg-gradient-to-r from-primary to-primary/80 flex items-center justify-center text-center px-4">
         <div className="max-w-3xl mx-auto">
           <p className="text-primary-foreground/80 uppercase tracking-widest text-sm font-semibold mb-3">
@@ -95,25 +72,25 @@ export default function HairReplacementPage() {
           </h1>
           <p className="text-lg text-primary-foreground/90 text-balance">
             Discover modern, natural-looking hair replacement solutions that restore your appearance and boost your
-            confidence. Expert consultation and premium results tailored specifically for men.
+            confidence. Expert consultation and premium results tailored specifically for you.
           </p>
         </div>
       </section>
 
-      <section className="py-16 px-4 bg-background border-b border-border">
+      {/* Why Choose Us Section */}
+      <section className="py-20 px-4 bg-muted/30 border-b border-border">
         <div className="max-w-4xl mx-auto">
-          <h2 className="font-serif text-3xl font-bold text-foreground mb-6">Why Choose Senses Salon?</h2>
-          <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-            Hair loss affects millions of men, impacting confidence and self-esteem. At Senses Salon, we specialize in
-            providing natural-looking, high-quality hair replacement solutions tailored to modern men. Whether you're
-            experiencing early hair loss or seeking a dramatic transformation, our expert team has the perfect solution
-            for you.
+          <h2 className="font-serif text-3xl font-bold text-foreground mb-6 text-center">Why Choose Senses Salon?</h2>
+          <p className="text-lg text-muted-foreground mb-12 leading-relaxed text-center max-w-2xl mx-auto">
+            Hair loss affects millions, impacting confidence and self-esteem. At Senses Salon, we specialize in
+            providing natural-looking, high-quality hair replacement solutions. Whether you're
+            experiencing early hair loss or seeking a dramatic transformation, our expert team has the perfect solution.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {benefits.map((benefit, index) => {
               const Icon = benefit.icon
               return (
-                <div key={index} className="flex gap-4">
+                <div key={index} className="flex gap-4 p-6 bg-card rounded-lg border border-border shadow-sm">
                   <div className="flex-shrink-0">
                     <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
                       <Icon className="w-6 h-6 text-primary" />
@@ -121,7 +98,7 @@ export default function HairReplacementPage() {
                   </div>
                   <div>
                     <h3 className="font-serif text-lg font-bold text-foreground mb-2">{benefit.title}</h3>
-                    <p className="text-muted-foreground text-sm">{benefit.description}</p>
+                    <p className="text-muted-foreground text-sm leading-relaxed">{benefit.description}</p>
                   </div>
                 </div>
               )
@@ -130,9 +107,10 @@ export default function HairReplacementPage() {
         </div>
       </section>
 
-      <section className="flex-1 py-16 px-4 bg-background">
+      {/* Solutions Grid */}
+      <section className="flex-1 py-20 px-4 bg-background">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
+          <div className="text-center mb-16">
             <h2 className="font-serif text-4xl font-bold text-foreground mb-4">Our Hair Replacement Solutions</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               From extensions to wigs and everything in between, we offer comprehensive hair replacement options for
@@ -140,61 +118,39 @@ export default function HairReplacementPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {services.map((service) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {solutions.map((item, index) => (
               <div
-                key={service.id}
-                className="bg-card rounded-lg overflow-hidden border border-border hover:shadow-lg transition"
+                key={index}
+                className="bg-card p-8 rounded-xl border border-border shadow-sm hover:shadow-md transition-all duration-300"
               >
-                <div className="h-48 bg-muted overflow-hidden">
-                  <img
-                    src={service.image || "/placeholder.svg"}
-                    alt={service.title}
-                    className="w-full h-full object-cover hover:scale-105 transition duration-300"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="font-serif text-2xl font-bold mb-2 text-foreground">{service.title}</h3>
-                  <p className="text-muted-foreground mb-4">{service.description}</p>
-                  <div className="flex justify-between items-center mb-4 pb-4 border-b border-border">
-                    <div>
-                      <p className="text-sm text-muted-foreground">Price</p>
-                      <p className="font-semibold text-primary">{service.price}</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-sm text-muted-foreground">Duration</p>
-                      <p className="font-semibold text-foreground">{service.duration}</p>
-                    </div>
-                  </div>
-                  <Link
-                    href="/booking"
-                    className="inline-flex w-full items-center justify-center px-4 py-2 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition"
-                  >
-                    Book Now
-                  </Link>
-                </div>
+                <div className="h-1 w-12 bg-primary mb-6 rounded-full"></div>
+                <h3 className="font-serif text-xl font-bold text-foreground mb-3">{item.title}</h3>
+                <p className="text-muted-foreground leading-relaxed">{item.description}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="py-16 px-4 bg-primary/5 border-t border-border">
+      {/* CTA Section */}
+      <section className="py-24 px-4 bg-foreground text-background">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="font-serif text-4xl font-bold text-foreground mb-4">Ready for Your Transformation?</h2>
-          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Schedule your free consultation with Joe Tucci and discover the perfect hair replacement solution for you.
+          <h2 className="font-serif text-4xl font-bold mb-6">Ready for Your Transformation?</h2>
+          <p className="text-lg text-background/80 mb-10 max-w-2xl mx-auto">
+            Schedule your consultation with Joe Tucci and discover the perfect hair replacement solution for you.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Link
-              href="/booking"
-              className="px-8 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition"
+              href="/location"
+              className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-background text-foreground rounded-full font-bold hover:bg-gray-100 transition-all transform hover:-translate-y-1"
             >
-              Book Consultation
+              Visit Us
+              <MapPin className="w-5 h-5" />
             </Link>
             <Link
               href="/portfolio"
-              className="px-8 py-3 bg-card border border-border text-foreground rounded-lg font-semibold hover:bg-muted transition"
+              className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-transparent border-2 border-background text-background rounded-full font-bold hover:bg-background/10 transition-all"
             >
               View Before & Afters
             </Link>

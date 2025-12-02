@@ -12,7 +12,7 @@ export default function Header() {
     { label: "Services", href: "/services" },
     { label: "Gallery", href: "/gallery" },
     { label: "About", href: "/about" },
-    { label: "Contact", href: "/contact" },
+    { label: "Contact", href: "/location" },
   ]
 
   return (
@@ -40,13 +40,7 @@ export default function Header() {
         </div>
 
         {/* CTA Button */}
-        <Link
-          href="/booking"
-          className="hidden sm:inline-block px-6 py-2 bg-rose-600 text-white rounded-full text-sm font-medium hover:bg-rose-700 transition-colors"
-        >
-          Book Now
-        </Link>
-
+        
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -71,13 +65,7 @@ export default function Header() {
                 {item.label}
               </Link>
             ))}
-            <Link
-              href="/booking"
-              className="block px-6 py-2 bg-rose-600 text-white rounded-full text-sm font-medium text-center hover:bg-rose-700 transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Book Now
-            </Link>
+           
           </div>
         </div>
       )}

@@ -390,13 +390,7 @@ export default function ServiceDetailPage({ params }: { params: { id: string } }
               </div>
 
               {/* CTA Button */}
-              <button
-                onClick={() => setIsBookingOpen(true)}
-                className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition"
-              >
-                <Calendar className="w-5 h-5" />
-                Book Appointment
-              </button>
+             
             </div>
           </div>
         </div>

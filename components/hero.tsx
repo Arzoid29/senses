@@ -39,12 +39,7 @@ export default function HeroCinematic() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-5 justify-center">
-            <Link
-              href="/booking"
-              className="px-8 py-4 bg-white text-black rounded-full font-semibold hover:bg-rose-50 transition-all transform hover:scale-105"
-            >
-              Book Your Visit
-            </Link>
+          
             
             {/* Botón con efecto Glassmorphism */}
             <Link

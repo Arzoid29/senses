@@ -1,61 +1,34 @@
+"use client"
+
+import { useState, useEffect } from "react"
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import { Award, Heart, Users, Lightbulb } from "lucide-react"
-
-interface TeamMember {
-  id: string
-  name: string
-  role: string
-  image: string
-  credentials: string[]
-  bio?: string
-  specialties?: string[]
-}
-
-const teamMembers: TeamMember[] = [
-  {
-    id: "joe-tucci",
-    name: "Joe Tucci",
-    role: "Creative Director / Owner",
-    image: "/professional-headshot-woman.jpg",
-    credentials: [
-      "Hair loss Expert / NHLMA Certified",
-      "International Board Certified Hair Colorist",
-      "Certified Master Hair Colorist (American Board of Certified Hair Colorists)",
-      "Certified Instructor for SHE by SOCAP Hair Extensions",
-      "International Educator and Platform Artist (MLH international – Italy + Germany)",
-      "National Educator and Platform Artist (Hair America, National Cosmetology Association, Helix Hair Academy, SHE by SOCAP)",
-      "International and National Hair Competitor in Men's Hairstyling",
-      "World Cup Supreme – Avant Garde – Bronze",
-      "Americas Cup Classic Men's Hairstyling: Bronze",
-      "Americas Cup Consumer's Men's Hairstyling: Bronze",
-      "Vidal Sassoon Academy – Santa Monica CA",
-      "MLH Academy – Vasto Italy",
-      "Helix Academy – Tennessee",
-      "London School of Makeup – Toronto Canada (Fashion, theatrical and special effects makeup)",
-      "Westchester Cosmetology Association / President 4 years / Vice President 2 years",
-    ],
-    bio: "At Senses, we work as a team. We all specialize in different facets of hair styling. Please let us know what your needs are and we can better direct you to a particular stylist.",
-  },
-  {
-    id: "jane-doe",
-    name: "Jane Doe",
-    role: "Senior Stylist",
-    image: "/placeholder.svg",
-    credentials: [
-      "Certified Master Stylist",
-      "Specialist in Balayage and Color Correction",
-      "10+ Years Experience in High-End Salons",
-    ],
-    bio: "Passionate about creating personalized looks that enhance natural beauty. Expert in modern cutting techniques and creative color.",
-  },
-]
+import { getTeamMembers, type TeamMember } from "@/lib/api"
 
 export default function AboutPage() {
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const loadTeam = async () => {
+      try {
+        const data = await getTeamMembers()
+        setTeamMembers(data)
+      } catch (error) {
+        console.error("Error loading team members:", error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+    loadTeam()
+  }, [])
+
   return (
     <main className="flex flex-col min-h-screen">
       <Navigation />
 
+      {/* Hero Section */}
       <section className="relative h-96 bg-gradient-to-r from-primary to-primary/80 flex items-center justify-center text-center px-4">
         <div className="max-w-3xl mx-auto">
           <h1 className="font-serif text-5xl sm:text-6xl font-bold mb-6 text-balance text-primary-foreground">
@@ -67,73 +40,76 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Team Grid Section */}
       <section className="py-16 px-4 bg-card">
         <div className="max-w-4xl mx-auto space-y-24">
-          {teamMembers.map((member) => (
-            <div key={member.id} className="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
-              {/* Profile Image */}
-              <div className="md:col-span-1">
-                <div className="bg-gray-300 aspect-square rounded-lg overflow-hidden">
-                  <img src={member.image || "/placeholder.svg"} alt={member.name} className="w-full h-full object-cover" />
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className="md:col-span-2">
-                <h2 className="font-serif text-3xl font-bold text-foreground mb-2">{member.role}</h2>
-                <p className="text-accent text-lg font-semibold mb-6">{member.name}</p>
-
-                <div className="space-y-4 mb-8">
-                  <ul className="space-y-2 text-foreground">
-                    {member.credentials.map((credential, index) => (
-                      <li key={index} className="flex items-start gap-2">
-                        <span className="text-accent font-bold mt-1">•</span>
-                        <span>{credential}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {member.bio && (
-                  <div className="bg-muted p-6 rounded-lg">
-                    <p className="text-foreground leading-relaxed mb-4">{member.bio}</p>
-                    <div className="flex flex-wrap gap-3">
-                      <a href="/services" className="text-accent font-medium hover:underline">
-                        Cut & Style
-                      </a>
-                      <span className="text-gray-400">•</span>
-                      <a href="/services" className="text-accent font-medium hover:underline">
-                        Coloring
-                      </a>
-                      <span className="text-gray-400">•</span>
-                      <a href="/services" className="text-accent font-medium hover:underline">
-                        Extensions
-                      </a>
-                      <span className="text-gray-400">•</span>
-                      <a href="/services" className="text-accent font-medium hover:underline">
-                        Texturing
-                      </a>
-                      <span className="text-gray-400">•</span>
-                      <a href="/services" className="text-accent font-medium hover:underline">
-                        Treatments
-                      </a>
-                      <span className="text-gray-400">•</span>
-                      <a href="/services" className="text-accent font-medium hover:underline">
-                        Wedding
-                      </a>
-                      <span className="text-gray-400">•</span>
-                      <a href="/services" className="text-accent font-medium hover:underline">
-                        Hair Replacement
-                      </a>
-                    </div>
-                  </div>
-                )}
-              </div>
+          
+          {isLoading ? (
+            <div className="text-center py-20">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+              <p className="text-muted-foreground">Loading team...</p>
             </div>
-          ))}
+          ) : teamMembers.length === 0 ? (
+            <div className="text-center text-muted-foreground">
+              <p>Our team information is currently being updated.</p>
+            </div>
+          ) : (
+            teamMembers.map((member) => (
+              <div key={member.id} className="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
+                {/* Profile Image */}
+                <div className="md:col-span-1">
+                  <div className="bg-gray-300 aspect-square rounded-lg overflow-hidden shadow-md relative">
+                    <img 
+                      src={member.image} 
+                      alt={member.name} 
+                      className="w-full h-full object-cover"
+                      onError={(e) => { (e.target as HTMLImageElement).src = "/placeholder-user.jpg" }}
+                    />
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="md:col-span-2">
+                  <h2 className="font-serif text-3xl font-bold text-foreground mb-2">{member.role}</h2>
+                  <p className="text-accent text-lg font-semibold mb-6">{member.name}</p>
+
+                  {/* Specialties List */}
+                  {member.specialties && member.specialties.length > 0 && (
+                    <div className="mb-8">
+                      <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-3">Specialties</h3>
+                      <ul className="space-y-2 text-foreground">
+                        {member.specialties.map((specialty, index) => (
+                          <li key={index} className="flex items-start gap-2">
+                            <span className="text-accent font-bold mt-1">•</span>
+                            <span>{specialty}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* Bio with HTML rendering */}
+                  {member.bio && (
+                    <div className="bg-muted p-6 rounded-lg text-foreground leading-relaxed prose prose-sm max-w-none">
+                      <div dangerouslySetInnerHTML={{ __html: member.bio }} />
+                    </div>
+                  )}
+                  
+                  {/* Contact info if available */}
+                  {(member.email || member.phone) && (
+                     <div className="mt-6 flex flex-col gap-1 text-sm text-muted-foreground">
+                        {member.email && <p>Email: {member.email}</p>}
+                        {member.phone && <p>Phone: {member.phone}</p>}
+                     </div>
+                  )}
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </section>
 
+      {/* Values Section */}
       <section className="py-20 px-4 bg-background">
         <div className="max-w-7xl mx-auto">
           <h2 className="font-serif text-4xl font-bold text-foreground mb-12 text-center text-balance">

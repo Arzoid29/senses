@@ -5,8 +5,9 @@ import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import Image from "next/image"
 import { Calendar, Clock, User, Phone, Mail, CheckCircle, ChevronRight, Sparkles } from "lucide-react"
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react" // Añadimos Suspense
 import Link from "next/link"
+import { useSearchParams } from "next/navigation" // Importante: para leer la URL
 import { getServices, submitBooking, type Service } from "@/lib/api"
 
 const timeSlots = [
@@ -14,10 +15,14 @@ const timeSlots = [
   "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM"
 ]
 
-export default function BookingPage() {
+// Componente interno para manejar la lógica del searchParams
+function BookingForm() {
+  const searchParams = useSearchParams()
+  const preSelectedServiceId = searchParams.get('serviceId') || ""
+
   const [services, setServices] = useState<Service[]>([])
   const [bookingData, setBookingData] = useState({
-    service: "",
+    service: "", // Se inicializará en el useEffect
     date: "",
     time: "",
     name: "",
@@ -27,19 +32,27 @@ export default function BookingPage() {
   const [submitted, setSubmitted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
+  // Cargar servicios y establecer selección inicial
   useEffect(() => {
     const loadServices = async () => {
       try {
         const data = await getServices()
-        // ARREGLO 1: Aseguramos que sea un array o array vacío, nunca null/undefined
-        setServices(Array.isArray(data) ? data : [])
+        const servicesList = Array.isArray(data) ? data : []
+        setServices(servicesList)
+        
+        // Si hay un ID en la URL, lo usamos
+        if (preSelectedServiceId) {
+          // Verificamos si el servicio existe en la lista cargada (opcional pero recomendado)
+          // Si no, simplemente lo seteamos igual
+          setBookingData(prev => ({ ...prev, service: preSelectedServiceId }))
+        }
       } catch (error) {
         console.log("Error loading services:", error)
-        setServices([]) // Fallback seguro
+        setServices([])
       }
     }
     loadServices()
-  }, [])
+  }, [preSelectedServiceId])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target
@@ -50,7 +63,6 @@ export default function BookingPage() {
     e.preventDefault()
     setIsSubmitting(true)
     try {
-      // Map local form shape to API Booking shape (service_id expected by the API)
       const payload = {
         service_id: bookingData.service,
         date: bookingData.date,
@@ -72,13 +84,10 @@ export default function BookingPage() {
     }
   }
 
-  // ARREGLO 2 (Línea 87 corregida): Usamos '?.' (optional chaining)
   const selectedService = services?.find((s) => s.id === bookingData.service)
 
   if (submitted) {
     return (
-      <main className="flex flex-col min-h-screen bg-neutral-50">
-        <Navigation />
         <div className="flex-1 flex items-center justify-center px-4 py-20">
           <div className="max-w-lg w-full bg-white p-8 rounded-2xl shadow-xl text-center border border-green-100">
             <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -96,40 +105,17 @@ export default function BookingPage() {
             </Link>
           </div>
         </div>
-        <Footer />
-      </main>
     )
   }
 
   return (
-    <main className="flex flex-col min-h-screen bg-neutral-50">
-      <Navigation />
-
-      {/* 1. Hero Compacto */}
-      <section className="relative bg-gray-900 py-20 px-4 overflow-hidden">
-        <div className="absolute inset-0 opacity-40">
-           <Image 
-             src="https://images.unsplash.com/photo-1521590832896-7ea86950890e?q=80&w=2069&auto=format&fit=crop"
-             alt="Booking Background"
-             fill
-             className="object-cover"
-           />
-        </div>
-        <div className="relative z-10 max-w-7xl mx-auto text-center">
-          <p className="text-rose-400 font-bold tracking-widest text-xs uppercase mb-3">Reservations</p>
-          <h1 className="font-serif text-4xl sm:text-5xl font-bold text-white">Secure Your Visit</h1>
-        </div>
-      </section>
-
-      {/* 2. Layout Principal (Split View) */}
       <section className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 py-12">
         <div className="grid lg:grid-cols-3 gap-12">
           
-          {/* COLUMNA IZQUIERDA: Formulario (Ocupa 2/3) */}
+          {/* COLUMNA IZQUIERDA: Formulario */}
           <div className="lg:col-span-2">
             <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sm:p-10 space-y-10">
               
-              {/* Step 1: Service & Time */}
               <div>
                 <h3 className="font-serif text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
                   <span className="w-8 h-8 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center text-sm">1</span>
@@ -269,7 +255,7 @@ export default function BookingPage() {
             </form>
           </div>
 
-          {/* COLUMNA DERECHA: Resumen Sticky (Ocupa 1/3) */}
+          {/* COLUMNA DERECHA: Resumen Sticky */}
           <div className="hidden lg:block">
             <div className="sticky top-24">
               <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
@@ -334,6 +320,34 @@ export default function BookingPage() {
 
         </div>
       </section>
+  )
+}
+
+export default function BookingPage() {
+  return (
+    <main className="flex flex-col min-h-screen bg-neutral-50">
+      <Navigation />
+
+      {/* 1. Hero Compacto */}
+      <section className="relative bg-gray-900 py-20 px-4 overflow-hidden">
+        <div className="absolute inset-0 opacity-40">
+           <Image 
+             src="https://images.unsplash.com/photo-1521590832896-7ea86950890e?q=80&w=2069&auto=format&fit=crop"
+             alt="Booking Background"
+             fill
+             className="object-cover"
+           />
+        </div>
+        <div className="relative z-10 max-w-7xl mx-auto text-center">
+          <p className="text-rose-400 font-bold tracking-widest text-xs uppercase mb-3">Reservations</p>
+          <h1 className="font-serif text-4xl sm:text-5xl font-bold text-white">Secure Your Visit</h1>
+        </div>
+      </section>
+
+      {/* Suspense es necesario porque useSearchParams requiere renderizado del lado del cliente */}
+      <Suspense fallback={<div className="flex justify-center p-10">Loading booking form...</div>}>
+        <BookingForm />
+      </Suspense>
 
       <Footer />
     </main>

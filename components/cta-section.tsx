@@ -10,12 +10,7 @@ export default function CTASection() {
           Visit Senses Salon and let our expert stylists create the perfect image for you.
         </p>
         <div className="flex flex-col md:flex-row gap-6 justify-center mb-12">
-          <Link
-            href="/booking"
-            className="inline-flex items-center justify-center gap-2 bg-accent text-white px-8 py-4 rounded font-semibold hover:bg-accent/90 transition-colors"
-          >
-            Book Appointment
-          </Link>
+          
           <Link
             href="/location"
             className="inline-flex items-center justify-center gap-2 border-2 border-white text-white px-8 py-4 rounded font-semibold hover:bg-white hover:text-gray-900 transition-colors"

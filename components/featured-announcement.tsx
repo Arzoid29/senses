@@ -18,13 +18,7 @@ export default function FeaturedAnnouncement() {
               clip-in or tape-in), <strong>Toppers, Wigs, Halos</strong> and <strong>Ponytails</strong> (real hair,
               synthetic and heat defiant), and <strong>Modern Hair Loss Solutions for Men</strong>.
             </p>
-            <Link
-              href="/booking"
-              className="inline-flex items-center gap-2 bg-accent text-white px-6 py-3 rounded hover:bg-accent/90 transition-colors"
-            >
-              Schedule Complimentary Scalp Evaluation
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+            
           </div>
           <img
             src="/professional-hair-replacement-solutions.jpg"

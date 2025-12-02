@@ -3,113 +3,95 @@
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import Link from "next/link"
+import { MapPin } from "lucide-react"
 
 export default function HairExtensionsPage() {
-  const services = [
+  const extensionMethods = [
     {
-      id: "hair-ext-strand-by-strand",
       title: "Strand-by-Strand Extensions",
-      description: "Individual extensions for the most natural and undetectable results with seamless integration.",
-      price: "$150 - $400",
-      duration: "180-240 min",
-      image: "/luxury-hair-extensions.jpg",
+      description: "Individual extensions for the most natural and undetectable results with seamless integration. Perfect for adding volume and length precisely where it matters most, allowing for 360-degree movement.",
     },
     {
-      id: "hair-ext-tape-in",
       title: "Tape-In Extensions",
-      description: "Quick application tape-in extensions that are comfortable, durable, and semi-permanent.",
-      price: "$120 - $300",
-      duration: "120-150 min",
-      image: "/luxury-hair-extensions.jpg",
+      description: "Quick application tape-in extensions that are comfortable, durable, and semi-permanent. Ideal for a seamless look that lies flat against the head, making them virtually invisible.",
     },
     {
-      id: "hair-ext-clip-in",
       title: "Clip-In Extensions",
-      description: "Removable extensions perfect for special events or daily use with instant length and volume.",
-      price: "$80 - $200",
-      duration: "60-90 min",
-      image: "/luxury-hair-extensions.jpg",
+      description: "Removable extensions perfect for special events or daily use with instant length and volume. The ultimate flexibility for your changing style without the commitment of permanent extensions.",
     },
     {
-      id: "hair-ext-hand-tied",
       title: "Hand-Tied Wefts",
-      description: "Premium hand-tied weft extensions with a thinner, more flexible base for natural movement.",
-      price: "$200 - $500",
-      duration: "180-240 min",
-      image: "/luxury-hair-extensions.jpg",
+      description: "Premium hand-tied weft extensions with a thinner, more flexible base for natural movement. Offers maximum coverage with minimal bulk, perfect for active lifestyles.",
     },
     {
-      id: "hair-ext-maintenance",
       title: "Extension Maintenance",
-      description: "Regular upkeep including adjustments, tightening, and care to keep extensions looking fresh.",
-      price: "$50 - $150",
-      duration: "45-90 min",
-      image: "/luxury-hair-extensions.jpg",
+      description: "Regular upkeep including adjustments, tightening, and care to keep extensions looking fresh. Essential for preserving the health of your natural hair and extending the life of the hair.",
     },
     {
-      id: "hair-ext-removal",
       title: "Extension Removal",
-      description: "Safe and gentle removal of extensions with treatments to restore hair health.",
-      price: "$50 - $100",
-      duration: "45-60 min",
-      image: "/luxury-hair-extensions.jpg",
+      description: "Safe and gentle removal of extensions with treatments to restore hair health. We ensure your natural hair remains strong and healthy throughout the transition process.",
     },
   ]
 
   return (
-    <main className="flex flex-col min-h-screen">
+    <main className="flex flex-col min-h-screen bg-background">
       <Navigation />
 
-      {/* Hero Section */}
-      <section className="relative h-96 bg-gradient-to-r from-primary to-primary/80 flex items-center justify-center text-center px-4">
-        <div className="max-w-3xl mx-auto">
-          <h1 className="font-serif text-5xl font-bold text-primary-foreground mb-4 text-balance">Hair Extensions</h1>
-          <p className="text-lg text-primary-foreground/90 text-balance">
-            Add instant length, volume, and thickness with our premium hair extension services. Choose from multiple
-            application methods for your perfect match.
+      {/* Header Informativo (Texto centrado, sin imagen de fondo distractora) */}
+      <section className="pt-32 pb-12 px-4 bg-muted/30 border-b border-border">
+        <div className="max-w-3xl mx-auto text-center">
+          <p className="text-sm font-bold tracking-widest text-primary uppercase mb-4">
+            Premium Services
+          </p>
+          <h1 className="font-serif text-4xl sm:text-5xl font-bold text-foreground mb-6">
+            Hair Extensions
+          </h1>
+          <p className="text-lg text-muted-foreground leading-relaxed">
+            Add instant length, volume, and thickness with our premium hair extension services. 
+            We offer a variety of advanced application methods tailored specifically to your lifestyle and hair type.
           </p>
         </div>
       </section>
 
-      {/* Services Grid */}
-      <section className="flex-1 py-16 px-4 bg-background">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            {services.map((service) => (
-              <div
-                key={service.id}
-                className="bg-card rounded-lg overflow-hidden border border-border hover:shadow-lg transition"
+      {/* Grid de Información (Diseño limpio de tarjetas de texto) */}
+      <section className="py-20 px-4">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8">
+            {extensionMethods.map((method, index) => (
+              <div 
+                key={index}
+                className="bg-card p-8 rounded-xl border border-border shadow-sm hover:shadow-md transition-all duration-300"
               >
-                <div className="h-48 bg-muted overflow-hidden">
-                  <img
-                    src={service.image || "/placeholder.svg"}
-                    alt={service.title}
-                    className="w-full h-full object-cover hover:scale-105 transition duration-300"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="font-serif text-2xl font-bold mb-2 text-foreground">{service.title}</h3>
-                  <p className="text-muted-foreground mb-4">{service.description}</p>
-                  <div className="flex justify-between items-center mb-4 pb-4 border-b border-border">
-                    <div>
-                      <p className="text-sm text-muted-foreground">Price</p>
-                      <p className="font-semibold text-primary">{service.price}</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-sm text-muted-foreground">Duration</p>
-                      <p className="font-semibold text-foreground">{service.duration}</p>
-                    </div>
-                  </div>
-                  <Link
-                    href="/booking"
-                    className="inline-flex w-full items-center justify-center px-4 py-2 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition"
-                  >
-                    Book Now
-                  </Link>
-                </div>
+                <div className="h-1 w-12 bg-primary mb-6 rounded-full"></div>
+                <h3 className="font-serif text-xl font-bold text-foreground mb-3">
+                  {method.title}
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  {method.description}
+                </p>
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Visit Us CTA */}
+      <section className="py-24 px-4 bg-foreground text-background">
+        <div className="max-w-xl mx-auto text-center space-y-8">
+          <h2 className="font-serif text-3xl md:text-4xl font-bold">
+            Experience the Transformation
+          </h2>
+          <p className="text-background/80 text-lg">
+            Ready to enhance your look? Visit our salon for a personalized consultation with our extension specialists.
+          </p>
+          
+          <Link
+            href="/location"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-background text-foreground rounded-full font-bold hover:bg-gray-100 transition-all transform hover:-translate-y-1"
+          >
+            <MapPin className="w-5 h-5" />
+            Visit Us
+          </Link>
         </div>
       </section>
 
