@@ -86,10 +86,10 @@ export default function Navigation() {
             </div>
             <div className="h-8 w-px bg-gray-200"></div>
             <Link
-              href="/contact"
+              href="/location"
               className="inline-flex items-center justify-center px-6 py-2.5 bg-gray-900 text-white text-sm font-medium rounded-full hover:bg-rose-600 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5"
             >
-              Contact Us
+              Location
             </Link>
           </div>
 
@@ -159,11 +159,11 @@ export default function Navigation() {
                         <span className="text-sm">5 Old Post Rd S, Croton-on-Hudson</span>
                     </div>
                     <Link
-                      href="/contact"
+                      href="/location"
                       onClick={() => setIsOpen(false)}
                       className="block w-full py-4 bg-gray-900 text-white text-center font-bold rounded-xl text-lg hover:bg-rose-600 transition-all shadow-lg"
                     >
-                      Contact Us
+                      Location
                     </Link>
                   </div>
                 </div>
