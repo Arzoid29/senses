@@ -3,7 +3,14 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
-import { Menu, X, MapPin } from "lucide-react"
+import { Menu, MapPin } from "lucide-react"
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetTitle,
+  SheetDescription,
+} from "@/components/ui/sheet"
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
@@ -11,8 +18,8 @@ export default function Navigation() {
 
   const mainServices = [
     { label: "Hair Color", href: "/hair-color" },
-    { label: "Extensions", href: "/hair-extensions" }, // Acorté "Hair Extensions" para mejor balance
-    { label: "Treatments", href: "/hair-loss-treatment" }, // Acorté "Loss Treatment"
+    { label: "Extensions", href: "/hair-extensions" },
+    { label: "Treatments", href: "/hair-loss-treatment" },
     { label: "Replacement", href: "/hair-replacement" },
     { label: "Wigs", href: "/wigs" },
   ]
@@ -46,8 +53,8 @@ export default function Navigation() {
             </Link>
           </div>
 
-          {/* 2. SERVICIOS PRINCIPALES (Centro Absoluto) - Solo visible en pantallas grandes */}
-          <div className="hidden xl:flex items-center justify-center space-x-8">
+          {/* 2. SERVICIOS PRINCIPALES (Centro) */}
+          <div className="hidden lg:flex items-center justify-center space-x-6 xl:space-x-8">
             {mainServices.map((service) => (
               <Link
                 key={service.href}
@@ -57,7 +64,6 @@ export default function Navigation() {
                 }`}
               >
                 {service.label}
-                {/* Indicador de activo: Un punto sutil en lugar de subrayado */}
                 {isActive(service.href) && (
                   <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-1 h-1 bg-rose-600 rounded-full"></span>
                 )}
@@ -67,9 +73,7 @@ export default function Navigation() {
 
           {/* 3. UTILIDADES + CTA (Derecha) */}
           <div className="hidden lg:flex items-center gap-6">
-            
-            {/* Links Secundarios (Texto más pequeño y gris) */}
-            <div className="flex items-center gap-6 mr-2">
+            <div className="flex items-center gap-4 xl:gap-6 mr-2">
               {utilityLinks.map((link) => (
                 <Link
                   key={link.href}
@@ -80,87 +84,94 @@ export default function Navigation() {
                 </Link>
               ))}
             </div>
-
-            {/* Separador Vertical */}
             <div className="h-8 w-px bg-gray-200"></div>
-
-            {/* Botón CTA */}
-           
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center px-6 py-2.5 bg-gray-900 text-white text-sm font-medium rounded-full hover:bg-rose-600 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5"
+            >
+              Contact Us
+            </Link>
           </div>
 
-          {/* Botón Menú Móvil (Visible en pantallas medianas hacia abajo) */}
+          {/* 4. MENÚ MÓVIL */}
           <div className="flex items-center gap-4 lg:hidden">
-            {/* Versión móvil del botón Book */}
-            
-            
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="p-2 text-gray-600 hover:text-gray-900 transition-colors"
-            >
-              {isOpen ? <X size={28} /> : <Menu size={28} />}
-            </button>
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
+              <SheetTrigger asChild>
+                <button
+                  className="p-2 text-gray-600 hover:text-gray-900 transition-colors"
+                  aria-label="Toggle menu"
+                >
+                  <Menu size={28} />
+                </button>
+              </SheetTrigger>
+              
+              {/* Eliminamos el padding por defecto (p-0) para controlar el layout completo */}
+              <SheetContent side="right" className="w-full sm:w-[400px] p-0 flex flex-col bg-white border-l border-gray-100">
+                <SheetTitle className="sr-only">Mobile Menu</SheetTitle>
+                <SheetDescription className="sr-only">Navigation links</SheetDescription>
+
+                {/* Cabecera del Menú */}
+                <div className="p-6 pt-12 pb-8 border-b border-gray-50">
+                   <div className="flex items-center gap-3 mb-8">
+                      <div className="w-8 h-8 bg-gray-900 text-white rounded-lg flex items-center justify-center">
+                        <span className="font-serif font-bold text-lg">S</span>
+                      </div>
+                      <span className="font-serif text-xl font-bold text-gray-900">Senses Salon</span>
+                   </div>
+                   
+                   {/* Enlaces Principales Grandes */}
+                   <div className="flex flex-col gap-6">
+                    {mainServices.map((service) => (
+                      <Link
+                        key={service.href}
+                        href={service.href}
+                        onClick={() => setIsOpen(false)}
+                        className={`text-3xl font-serif font-medium transition-colors ${
+                          isActive(service.href) ? "text-rose-600" : "text-gray-900 hover:text-rose-600"
+                        }`}
+                      >
+                        {service.label}
+                      </Link>
+                    ))}
+                   </div>
+                </div>
+
+                {/* Footer del Menú (Enlaces secundarios y contacto) */}
+                <div className="mt-auto bg-gray-50 p-6 space-y-8">
+                  {/* Grid de enlaces secundarios */}
+                  <div className="grid grid-cols-2 gap-y-4 gap-x-8">
+                    {utilityLinks.map((link) => (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        onClick={() => setIsOpen(false)}
+                        className="text-sm font-semibold text-gray-500 uppercase tracking-wider hover:text-gray-900"
+                      >
+                        {link.label}
+                      </Link>
+                    ))}
+                  </div>
+
+                  {/* Información de Contacto */}
+                  <div className="space-y-4 pt-4 border-t border-gray-200">
+                    <div className="flex items-center gap-3 text-gray-600">
+                        <MapPin size={16} className="text-rose-600" />
+                        <span className="text-sm">5 Old Post Rd S, Croton-on-Hudson</span>
+                    </div>
+                    <Link
+                      href="/contact"
+                      onClick={() => setIsOpen(false)}
+                      className="block w-full py-4 bg-gray-900 text-white text-center font-bold rounded-xl text-lg hover:bg-rose-600 transition-all shadow-lg"
+                    >
+                      Contact Us
+                    </Link>
+                  </div>
+                </div>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </div>
-
-      {/* --- MENÚ MÓVIL OPTIMIZADO --- */}
-      {isOpen && (
-        <div className="fixed inset-0 z-40 bg-white/95 backdrop-blur-xl lg:hidden animate-in fade-in slide-in-from-top-5 duration-200">
-          <div className="pt-24 px-6 pb-6 h-full overflow-y-auto flex flex-col">
-            
-            {/* Botón Cerrar Flotante */}
-            <button 
-              onClick={() => setIsOpen(false)}
-              className="absolute top-6 right-6 p-2 bg-gray-100 rounded-full"
-            >
-              <X size={24} />
-            </button>
-
-            <div className="space-y-8">
-              {/* Sección Servicios */}
-              <div>
-                <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Menu</p>
-                <div className="space-y-3">
-                  {mainServices.map((service) => (
-                    <Link
-                      key={service.href}
-                      href={service.href}
-                      onClick={() => setIsOpen(false)}
-                      className="block text-2xl font-serif font-medium text-gray-900 hover:text-rose-600 transition-colors"
-                    >
-                      {service.label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-
-              {/* Sección Utilidades */}
-              <div className="border-t border-gray-100 pt-8">
-                <div className="grid grid-cols-2 gap-4">
-                  {utilityLinks.map((link) => (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      onClick={() => setIsOpen(false)}
-                      className="text-sm font-medium text-gray-500 hover:text-gray-900"
-                    >
-                      {link.label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-              
-              {/* Info de contacto rápida en móvil */}
-              <div className="mt-auto pt-8 border-t border-gray-100">
-                 <div className="flex items-center gap-3 text-gray-500 mb-6">
-                    <MapPin size={18} />
-                    <span className="text-sm">123 Beauty Lane, Luxury City</span>
-                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </nav>
   )
 }

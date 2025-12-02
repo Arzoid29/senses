@@ -6,19 +6,19 @@ import "./globals.css"
 
 const geist = Geist({
   subsets: ["latin"],
-  variable: "--font-sans", 
+  variable: "--font-sans",
 })
 
 const geistMono = Geist_Mono({
   subsets: ["latin"],
-  variable: "--font-mono", 
+  variable: "--font-mono",
 })
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://sensessalon.com"),
   title: {
     default: "Senses Salon - Premium Hair & Wellness Services",
-    template: "%s | Senses Salon", 
+    template: "%s | Senses Salon",
   },
   description:
     "Expert hair replacement, extensions, color, and wellness services in Croton-on-Hudson, NY. Specializing in men's hair loss solutions, custom wigs, and scalp treatments.",
@@ -68,13 +68,14 @@ export const metadata: Metadata = {
     description: "Premium hair replacement and wellness services.",
     images: ["/og-image.jpg"],
   },
+  // ACTUALIZADO: Ahora apunta a /icon.png (asegúrate de guardar la imagen en la carpeta public)
   icons: {
-    icon: "/icon.svg",
-    shortcut: "/icon.svg",
-    apple: "/icon.svg",
+    icon: "/icon.png",
+    shortcut: "/icon.png",
+    apple: "/icon.png",
     other: {
       rel: "apple-touch-icon-precomposed",
-      url: "/icon.svg",
+      url: "/icon.png",
     },
   },
   robots: {
