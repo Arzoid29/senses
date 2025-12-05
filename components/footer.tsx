@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Instagram, Facebook, Twitter, Linkedin } from "lucide-react"
+import { Instagram, Facebook } from "lucide-react"
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
@@ -31,27 +31,27 @@ export default function Footer() {
             <h3 className="font-serif font-bold text-lg mb-4">Services</h3>
             <ul className="space-y-2 text-sm opacity-80">
               <li>
-                <Link href="/hair-color" className="hover:text-background transition">
+                <Link href="/hair-color" className="hover:opacity-100 transition">
                   Hair Color
                 </Link>
               </li>
               <li>
-                <Link href="/hair-extensions" className="hover:text-background transition">
+                <Link href="/hair-extensions" className="hover:opacity-100 transition">
                   Hair Extensions
                 </Link>
               </li>
               <li>
-                <Link href="/hair-replacement" className="hover:text-background transition">
+                <Link href="/hair-replacement" className="hover:opacity-100 transition">
                   Hair Replacement
                 </Link>
               </li>
               <li>
-                <Link href="/wigs" className="hover:text-background transition">
+                <Link href="/wigs" className="hover:opacity-100 transition">
                   Wigs & Toppers
                 </Link>
               </li>
               <li>
-                <Link href="/portfolio" className="hover:text-background transition">
+                <Link href="/portfolio" className="hover:opacity-100 transition">
                   Portfolio
                 </Link>
               </li>
@@ -63,30 +63,47 @@ export default function Footer() {
             <h3 className="font-serif font-bold text-lg mb-4">Company</h3>
             <ul className="space-y-2 text-sm opacity-80">
               <li>
-                <Link href="/about" className="hover:text-background transition">
+                <Link href="/about" className="hover:opacity-100 transition">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link href="/location" className="hover:text-background transition">
+                <Link href="/location" className="hover:opacity-100 transition">
                   Contact
                 </Link>
               </li>
-             
-              {/* <li>
-                <Link href="/referrals" className="hover:text-background transition">
-                  Referral Program
-                </Link>
-              </li> */}
               <li>
-                <Link href="/location" className="hover:text-background transition">
+                <Link href="/location" className="hover:opacity-100 transition">
                   Location & Hours
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Social */}
+          {/* Social - SECCIÓN AGREGADA AQUÍ */}
+          <div>
+            <h3 className="font-serif font-bold text-lg mb-4">Follow Us</h3>
+            <div className="flex gap-4">
+              <a
+                href="https://www.facebook.com/sensessalon/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="opacity-80 hover:opacity-100 transition hover:scale-110 transform duration-200"
+                aria-label="Visit us on Facebook"
+              >
+                <Facebook className="w-6 h-6" />
+              </a>
+              <a
+                href="https://www.instagram.com/senses_salon/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="opacity-80 hover:opacity-100 transition hover:scale-110 transform duration-200"
+                aria-label="Visit us on Instagram"
+              >
+                <Instagram className="w-6 h-6" />
+              </a>
+            </div>
+          </div>
           
         </div>
 

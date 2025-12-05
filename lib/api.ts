@@ -1,8 +1,6 @@
-// lib/api.ts
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://188.138.28.243/api"
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
-// --- Interfaces Genéricas ---
 interface ApiListResponse<T> {
   count: number
   next: string | null
@@ -10,7 +8,6 @@ interface ApiListResponse<T> {
   results: T[]
 }
 
-// --- Interfaces SERVICES ---
 interface ApiCategory {
   id: number
   name: string
@@ -32,7 +29,6 @@ interface ApiService {
   category: ApiCategory | number | string
 }
 
-// --- Interfaces PORTFOLIO ---
 interface ApiPortfolioCategory {
   id: number
   name: string
@@ -48,7 +44,6 @@ interface ApiPortfolioItem {
   after_image: string | null 
 }
 
-// --- Interfaces TEAM (Ajustado a tu JSON) ---
 interface ApiTeamSpecialty {
   id: number
   name: string
@@ -60,9 +55,9 @@ interface ApiTeamMember {
   id: number
   name: string
   slug: string
-  title: string             // Antes asumimos 'role', ahora es 'title'
-  bio: string               // Contiene HTML
-  photo: string | null      // Antes asumimos 'image', ahora es 'photo'
+  title: string            
+  bio: string             
+  photo: string | null      
   specialties: ApiTeamSpecialty[]
   email?: string
   phone?: string
@@ -70,7 +65,6 @@ interface ApiTeamMember {
   is_active?: boolean
 }
 
-// --- Interfaces de la UI (Frontend) ---
 
 export interface Category {
   id: string | number
@@ -103,8 +97,8 @@ export interface TeamMember {
   name: string
   role: string
   image: string
-  bio: string // HTML string
-  specialties: string[] // Array simple de strings para la UI
+  bio: string 
+  specialties: string[] 
   email?: string
   phone?: string
 }
@@ -125,8 +119,6 @@ export interface ContactMessage {
   subject: string
   message: string
 }
-
-// --- Transformadores ---
 
 const transformApiService = (data: ApiService): Service => {
   let categoryName = "General";
@@ -168,7 +160,6 @@ const transformPortfolioItem = (data: ApiPortfolioItem): PortfolioItem => {
 };
 
 const transformTeamMember = (data: ApiTeamMember): TeamMember => {
-  // Extraemos solo los nombres de las especialidades para la UI
   const specialtiesList = Array.isArray(data.specialties) 
     ? data.specialties.map(s => s.name) 
     : [];
@@ -176,16 +167,14 @@ const transformTeamMember = (data: ApiTeamMember): TeamMember => {
   return {
     id: String(data.id),
     name: data.name || "Team Member",
-    role: data.title || "Stylist", // Mapeamos 'title' de API a 'role' de UI
-    image: data.photo || "/placeholder-user.jpg", // Mapeamos 'photo' a 'image'
+    role: data.title || "Stylist", 
+    image: data.photo || "/placeholder-user.jpg", 
     bio: data.bio || "",
     specialties: specialtiesList,
     email: data.email,
     phone: data.phone
   };
 };
-
-// --- Llamadas a la API ---
 
 export async function getCategories(): Promise<Category[]> {
   try {

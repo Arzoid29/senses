@@ -17,6 +17,7 @@ export default function Navigation() {
   const pathname = usePathname()
 
   const mainServices = [
+    { label: "Hair Cut", href: "/hair-cut" }, // AGREGADO AQUÍ
     { label: "Hair Color", href: "/hair-color" },
     { label: "Extensions", href: "/hair-extensions" },
     { label: "Treatments", href: "/hair-loss-treatment" },
@@ -105,7 +106,6 @@ export default function Navigation() {
                 </button>
               </SheetTrigger>
               
-              {/* Eliminamos el padding por defecto (p-0) para controlar el layout completo */}
               <SheetContent side="right" className="w-full sm:w-[400px] p-0 flex flex-col bg-white border-l border-gray-100">
                 <SheetTitle className="sr-only">Mobile Menu</SheetTitle>
                 <SheetDescription className="sr-only">Navigation links</SheetDescription>
@@ -136,9 +136,8 @@ export default function Navigation() {
                    </div>
                 </div>
 
-                {/* Footer del Menú (Enlaces secundarios y contacto) */}
+                {/* Footer del Menú */}
                 <div className="mt-auto bg-gray-50 p-6 space-y-8">
-                  {/* Grid de enlaces secundarios */}
                   <div className="grid grid-cols-2 gap-y-4 gap-x-8">
                     {utilityLinks.map((link) => (
                       <Link
@@ -152,7 +151,6 @@ export default function Navigation() {
                     ))}
                   </div>
 
-                  {/* Información de Contacto */}
                   <div className="space-y-4 pt-4 border-t border-gray-200">
                     <div className="flex items-center gap-3 text-gray-600">
                         <MapPin size={16} className="text-rose-600" />

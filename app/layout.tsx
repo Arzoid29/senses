@@ -21,13 +21,17 @@ export const metadata: Metadata = {
     template: "%s | Senses Salon",
   },
   description:
-    "Expert hair replacement, extensions, color, and wellness services in Croton-on-Hudson, NY. Specializing in men's hair loss solutions, custom wigs, and scalp treatments.",
+    "Expert hair replacement, extensions, color, and wellness services in Croton-on-Hudson, NY. Serving clients across Westchester and Putnam Counties. Specializing in men's hair loss solutions, custom wigs, and scalp treatments.",
   keywords: [
     "Senses Salon",
     "hair replacement NYC",
+    "hair replacement Westchester",
+    "hair replacement Putnam County",
     "men's hair loss solutions",
     "hair extensions Westchester",
     "hair color specialist",
+    "Westchester County hair salon",
+    "Putnam County hair salon",
     "custom wigs",
     "scalp treatments",
     "trichology",
@@ -48,7 +52,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Senses Salon - Creating Your Image",
-    description: "Premium hair replacement, custom wigs, and wellness services in Westchester, NY.",
+    description: "Premium hair replacement, custom wigs, and wellness services serving Westchester and Putnam Counties, NY.",
     url: "https://sensessalon.com",
     siteName: "Senses Salon",
     locale: "en_US",
@@ -65,10 +69,9 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Senses Salon - Creating Your Image",
-    description: "Premium hair replacement and wellness services.",
+    description: "Premium hair replacement and wellness services in Westchester and Putnam.",
     images: ["/og-image.jpg"],
   },
-  // ACTUALIZADO: Ahora apunta a /icon.png (asegúrate de guardar la imagen en la carpeta public)
   icons: {
     icon: "/icon.png",
     shortcut: "/icon.png",

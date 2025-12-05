@@ -3,76 +3,76 @@
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import Link from "next/link"
-import { CheckCircle, Award, Users, Zap, MapPin } from "lucide-react"
+import { CheckCircle, Award, Users, Zap, MapPin, Shield } from "lucide-react"
 
-export default function HairReplacementPage() {
+export default function MensHairReplacementPage() {
   const solutions = [
     {
-      title: "Hair Replacement Consultation",
-      description: "One-on-one consultation to explore all hair replacement options and find your perfect solution. We discuss your lifestyle, budget, and desired look in a private setting.",
+      title: "Custom Hair Systems",
+      description: "State-of-the-art hair systems designed to match your exact density, texture, and gray percentage. Virtually undetectable and styled to your age and preference.",
     },
     {
-      title: "Hair Extensions",
-      description: "Strand-by-strand, clip-in, or tape-in extensions for quick volume and length restoration. Ideal for early stages of thinning or adding density.",
+      title: "Non-Surgical Bonding",
+      description: "Advanced bonding techniques that secure the system to your scalp , allowing you to shower, swim, and exercise without fear of shifting or detachment.",
     },
     {
-      title: "Hair Toppers",
-      description: "Partial hairpieces designed to cover thinning areas or bald spots with a completely natural appearance. Seamlessly integrates with your existing hair.",
+      title: "System Maintenance",
+      description: "Regular professional service to clean, re-bond, and style your system. We ensure your scalp remains healthy and your look stays fresh and natural.",
     },
     {
-      title: "Full Wigs",
-      description: "Complete wig solutions in synthetic or real hair for total hair replacement. Custom-fitted for maximum comfort and styled to your preference.",
+      title: "Scalp Health & Prep",
+      description: "A healthy foundation is key. We treat the scalp to ensure optimal bonding conditions and long-term skin health under your replacement system.",
     },
     {
-      title: "Halos & Hair Bands",
-      description: "Non-invasive halo hairpieces for instant added volume and length without clips or glue. Perfect for occasional wear or sensitive scalps.",
+      title: "The 'Graduate' Transition",
+      description: "For men who want a subtle change, we offer a graduated plan to restore hair density over time, making the transformation appear completely natural to peers.",
     },
     {
-      title: "Men's Hair Solutions",
-      description: "Modern, non-surgical hair loss solutions for men. We create undetectable systems that allow you to swim, shower, and live your life with confidence.",
+      title: "Private Consultation",
+      description: "A discreet, one-on-one session with Joe Tucci to analyze your hair loss pattern and design a custom roadmap for your hair restoration.",
     },
   ]
 
   const benefits = [
     {
       icon: Zap,
-      title: "Immediate Results",
+      title: "Active Lifestyle Proof",
       description:
-        "See dramatic transformation in a single appointment. No waiting periods or multiple sessions needed.",
+        "Swim, run, and shower with confidence. Our systems are designed for the modern, active man.",
     },
     {
-      icon: CheckCircle,
-      title: "Natural Appearance",
-      description: "Premium hair and expert craftsmanship create undetectable, natural-looking results.",
+      icon: Shield, // Cambiado a Shield para denotar seguridad/privacidad
+      title: "100% Undetectable",
+      description: "Seamless hairlines and expert blending make our systems invisible, even up close.",
     },
     {
       icon: Award,
-      title: "Expert Consultation",
-      description: "Work with Joe Tucci and our specialized team to find the perfect solution for your unique needs.",
+      title: "Men's Specialist",
+      description: "Specialized strictly in male hair loss patterns, receding hairlines, and age-appropriate density.",
     },
     {
       icon: Users,
-      title: "Personalized Service",
-      description: "Each solution is custom-tailored to your lifestyle, budget, and aesthetic goals.",
+      title: "Private & Discrete",
+      description: "We understand the sensitivity of hair loss. Your consultation and services are conducted with utmost privacy.",
     },
   ]
 
   return (
-    <main className="flex flex-col min-h-screen bg-background">
+    <main className="flex flex-col min-h-screenbg-gradient-to-r from-primary to-primary/80 ">
       <Navigation />
 
       {/* Hero Section */}
-      <section className="relative h-96 bg-gradient-to-r from-primary to-primary/80 flex items-center justify-center text-center px-4">
+      <section className="relative h-96 bg-gradient-to-r from-primary to-primary/80  flex items-center justify-center text-center px-4">
         <div className="max-w-3xl mx-auto">
-          <p className="text-primary-foreground/80 uppercase tracking-widest text-sm font-semibold mb-3">
-            Men's Hair Replacement Specialist
+          <p className="text-blue-200 uppercase tracking-widest text-sm font-semibold mb-3">
+            Advanced Hair Restoration
           </p>
-          <h1 className="font-serif text-5xl font-bold text-primary-foreground mb-4 text-balance">
-            Reclaim Your Confidence
+          <h1 className="font-serif text-5xl font-bold text-white mb-4 text-balance">
+            Men's Hair Replacement
           </h1>
-          <p className="text-lg text-primary-foreground/90 text-balance">
-            Discover modern, natural-looking hair replacement solutions that restore your appearance and boost your
-            confidence. Expert consultation and premium results tailored specifically for you.
+          <p className="text-lg text-slate-300 text-balance max-w-2xl mx-auto">
+            Restore your look, your hairline, and your confidence without surgery. 
+            Westchester's premier non-surgical solutions for men.
           </p>
         </div>
       </section>
@@ -80,11 +80,11 @@ export default function HairReplacementPage() {
       {/* Why Choose Us Section */}
       <section className="py-20 px-4 bg-muted/30 border-b border-border">
         <div className="max-w-4xl mx-auto">
-          <h2 className="font-serif text-3xl font-bold text-foreground mb-6 text-center">Why Choose Senses Salon?</h2>
+          <h2 className="font-serif text-3xl font-bold text-foreground mb-6 text-center">The Senses Standard</h2>
           <p className="text-lg text-muted-foreground mb-12 leading-relaxed text-center max-w-2xl mx-auto">
-            Hair loss affects millions, impacting confidence and self-esteem. At Senses Salon, we specialize in
-            providing natural-looking, high-quality hair replacement solutions. Whether you're
-            experiencing early hair loss or seeking a dramatic transformation, our expert team has the perfect solution.
+            Hair loss is more than just aesthetics; it's about how you feel facing the world. 
+            We specialize in creating <strong>natural, age-appropriate looks</strong> that don't look like "wigs." 
+            They look like <em>your</em> hair.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {benefits.map((benefit, index) => {
@@ -111,10 +111,9 @@ export default function HairReplacementPage() {
       <section className="flex-1 py-20 px-4 bg-background">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="font-serif text-4xl font-bold text-foreground mb-4">Our Hair Replacement Solutions</h2>
+            <h2 className="font-serif text-4xl font-bold text-foreground mb-4">Our Process & Solutions</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              From extensions to wigs and everything in between, we offer comprehensive hair replacement options for
-              every need and budget.
+              A comprehensive approach to men's hair restoration, from the initial design to monthly maintenance.
             </p>
           </div>
 
@@ -122,9 +121,9 @@ export default function HairReplacementPage() {
             {solutions.map((item, index) => (
               <div
                 key={index}
-                className="bg-card p-8 rounded-xl border border-border shadow-sm hover:shadow-md transition-all duration-300"
+                className="bg-card p-8 rounded-xl border border-border shadow-sm hover:shadow-md transition-all duration-300 group"
               >
-                <div className="h-1 w-12 bg-primary mb-6 rounded-full"></div>
+                <div className="h-1 w-12 bg-primary mb-6 rounded-full group-hover:w-20 transition-all"></div>
                 <h3 className="font-serif text-xl font-bold text-foreground mb-3">{item.title}</h3>
                 <p className="text-muted-foreground leading-relaxed">{item.description}</p>
               </div>
@@ -136,23 +135,17 @@ export default function HairReplacementPage() {
       {/* CTA Section */}
       <section className="py-24 px-4 bg-foreground text-background">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="font-serif text-4xl font-bold mb-6">Ready for Your Transformation?</h2>
+          <h2 className="font-serif text-4xl font-bold mb-6">Take the First Step</h2>
           <p className="text-lg text-background/80 mb-10 max-w-2xl mx-auto">
-            Schedule your consultation with Joe Tucci and discover the perfect hair replacement solution for you.
+            Stop worrying about hair loss. Schedule a private, no-obligation consultation with Joe Tucci today.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Link
-              href="/location"
-              className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-background text-foreground rounded-full font-bold hover:bg-gray-100 transition-all transform hover:-translate-y-1"
-            >
-              Visit Us
-              <MapPin className="w-5 h-5" />
-            </Link>
+            
             <Link
               href="/portfolio"
               className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-transparent border-2 border-background text-background rounded-full font-bold hover:bg-background/10 transition-all"
             >
-              View Before & Afters
+              See Real Results
             </Link>
           </div>
         </div>
